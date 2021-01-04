@@ -1,19 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <component :is="layout">
+      <router-view></router-view>
+    </component>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import _ from "lodash";
+const layout = require.context("./layouts", false, /.vue/);
+const layouts = {};
+layout.keys().forEach(key => {
+  let name = key.split(".");
+  name = _.camelCase(name[1]);
+  layouts[name] = layout(key).default;
+});
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "App",
+  components: layouts,
+  data() {
+    return {
+      layout: "default"
+    };
+  },
+  created() {
+    const layout = this.$route.meta.layout;
+    if (layout) {
+      this.layout = layout;
+    }
   }
-}
+};
 </script>
 
 <style>
