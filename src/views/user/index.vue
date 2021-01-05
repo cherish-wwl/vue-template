@@ -6,34 +6,39 @@
      <br />
     <button class="btn" @click="change">change</button>
     <Test />
+    <br />
+    <button @click="toPage">home</button>
   </div>
 </template>
-<script>
-import { state, actions, mutations } from "./store";
-import Test from "./components/test";
-export default {
+<script lang="ts">
+import { Vue , Component} from 'vue-property-decorator'
+import { state, actions, mutations } from "./store/index";
+import Test from "./components/test.vue";
+@Component({
   components: {
     Test
-  },
-  computed: {
-    count() {
+  }
+})
+export default class User extends Vue {
+  public get count(){
       return state.count;
-    }
-  },
+ }
   mounted() {
     actions.getCountSync(111);
-  },
-  methods: {
-    change() {
-      mutations.SET_COUNT(this.count + 1);
-    }
   }
+  change() {
+    mutations.SET_COUNT(this.count + 1);
+  }
+  toPage() {
+    this.$router.push('/') 
+  }
+  
 };
 </script>
 <style lang="scss" scoped>
 .container{
-.btn{
-  background-color: aquamarine;
-}
+  .btn{
+    background-color: aquamarine;
+  }
 }
 </style>

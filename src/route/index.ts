@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import _ from "lodash";
-
+import { RouteConfig } from "vue-router/types/router"
 Vue.use(VueRouter);
 
 let router = require.context(
@@ -9,7 +9,8 @@ let router = require.context(
   true,
   /^((?!components|store).)*.vue$/
 );
-let routes = [];
+
+let routes:RouteConfig[] = [];
 
 router.keys().forEach(key => {
   let _keyarr = key.split(".");

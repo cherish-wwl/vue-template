@@ -11,11 +11,11 @@ instance.interceptors.request.use((config) => {
 },err => Promise.reject(err))
 
 instance.interceptors.response.use((response) => {
-  const { code } = response 
-  if(code !== 0) {
-    //$alert(msg)
-    return Promise.reject(response.data)
-  }
+  // const { code } = response
+  // if(code !== 0) {
+  //   //$alert(msg)
+  //   return Promise.reject(response.data)
+  // }
   return response.data
 },err => Promise.reject(err))
 

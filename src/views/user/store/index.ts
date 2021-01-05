@@ -8,13 +8,13 @@ export const state = Vue.observable({
 
 
 export const mutations = {
-  SET_COUNT(count){
+  SET_COUNT(count:number){
     state.count = count
   }
 }
 
 export const actions = {
-  async getCountSync(data) {
+  async getCountSync(data:number) {
     setTimeout(() => {
       mutations.SET_COUNT(data)
     },1000)
