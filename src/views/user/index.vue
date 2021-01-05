@@ -5,7 +5,7 @@
     count: {{ count }};
      <br />
     <button class="btn" @click="change">change</button>
-    <Test />
+    <!-- <Test /> -->
     <br />
     <button @click="toPage">home</button>
   </div>
@@ -20,20 +20,21 @@ import Test from "./components/test.vue";
   }
 })
 export default class User extends Vue {
-  public get count(){
+  public get count():number{
       return state.count;
  }
-  mounted() {
+  mounted():void {
     actions.getCountSync(111);
   }
-  change() {
+  change():void {
     mutations.SET_COUNT(this.count + 1);
   }
-  toPage() {
+  toPage():void {
     this.$router.push('/') 
+    console.log(this.$route)
   }
   
-};
+}
 </script>
 <style lang="scss" scoped>
 .container{

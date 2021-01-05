@@ -4,7 +4,7 @@ import _ from "lodash";
 import { RouteConfig } from "vue-router/types/router"
 Vue.use(VueRouter);
 
-let router = require.context(
+const router = require.context(
   "../views",
   true,
   /^((?!components|store).)*.vue$/
@@ -13,7 +13,7 @@ let router = require.context(
 let routes:RouteConfig[] = [];
 
 router.keys().forEach(key => {
-  let _keyarr = key.split(".");
+  const _keyarr = key.split(".");
   if (key.indexOf("index") != -1) {
     const path = _keyarr[1].replace("/index", "");
     routes.push({
@@ -35,7 +35,6 @@ router.keys().forEach(key => {
     });
   }
 });
-console.log("routes", routes);
 routes = routes.concat([
   {
     path: "/",
