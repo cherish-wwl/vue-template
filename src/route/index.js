@@ -38,7 +38,9 @@ console.log("routes", routes);
 routes = routes.concat([
   {
     path: "/",
-    redirect: "/home"
+    // redirect: "/home"
+    component: () => import("@/views/home"), // 相当于import
+    name:'home',
   }
 ]);
 
