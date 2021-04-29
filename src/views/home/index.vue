@@ -17,8 +17,9 @@
             </div>
           </div>
           <div class="row borderTop mt">
-            <div class="col">
+            <div class="col pos">
               <textarea rows="3" maxlength="8" :class="{error: error === 'content'}" v-model="content" width="100%" placeholder="输入您想刻印在行李牌上的文案"/>
+              <span class="suffix">{{content.length}} /8</span>
             </div>
           </div>
           <div class="row" style="justify-content: center;">
@@ -53,7 +54,7 @@ export default {
         this.error= "name"
         return
       }
-      if (!this.phone) {
+      if (!this.phone || isNaN(this.phone) || this.phone.length != 11) {
         this.error= "phone"
         return
       }
@@ -62,7 +63,7 @@ export default {
         return
       }
       HTTP({
-        url:'/submit',
+        url:'/Home/index',
         method:"post",
         data:{
           username: this.name,
@@ -70,9 +71,19 @@ export default {
           msg: this.content,
         }
       }).then( () => {
-        this.show = true
-      }).catch((e) => {
-        console.log('失败', e)
+          this.show = true
+       
+      }).catch((res) => {
+        console.log('失败', res)
+         if(res.msg.indexOf('姓名') != -1){
+            this.error= "name"
+          }
+          if(res.msg.indexOf('手机') != -1){
+            this.error= "phone"
+          }
+          if(res.msg.indexOf('行李') != -1){
+            this.error= "content"
+          }
       })
     }
   }
@@ -156,7 +167,7 @@ input:focus, textarea:focus{
   border: none;
   outline: none;
 }
-input.error::placeholder,textarea.error::placeholder{
+input.error::placeholder,textarea.error::placeholder,input.error,textarea.error{
   color: #B50029;
 }
 
@@ -171,4 +182,13 @@ input.error::placeholder,textarea.error::placeholder{
   // letter-spacing: 2rem;
 }
 
+.pos{
+  position: relative;
+}
+.suffix{
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  color: #C4B794;
+}
 </style>
