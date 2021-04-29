@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="logo-image">
+    <div class="logo-image" style="min-height: 350px">
       <img width="100%" src="/img/bg.png">
     </div>
     <div style="padding: 0 2rem;">
@@ -18,10 +18,10 @@
           </div>
           <div class="row borderTop mt">
             <div class="col">
-              <textarea rows="3" :class="{error: error === 'content'}" v-model="content" width="100%" placeholder="输入您想刻印在行李牌上的文案"/>
+              <textarea rows="3" maxlength="8" :class="{error: error === 'content'}" v-model="content" width="100%" placeholder="输入您想刻印在行李牌上的文案"/>
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="justify-content: center;">
             <button class="col btn" @click="confrim">提交</button>
           </div>
         </div>
@@ -65,14 +65,14 @@ export default {
         url:'/submit',
         method:"post",
         data:{
-          name: this.name,
-          phone: this.phone,
-          content: this.content,
+          username: this.name,
+          mobile: this.phone,
+          msg: this.content,
         }
       }).then( () => {
         this.show = true
-      }).catch(() => {
-        this.show = true
+      }).catch((e) => {
+        console.log('失败', e)
       })
     }
   }
@@ -85,26 +85,18 @@ export default {
   // background-image: url('/img/bg.png');
   // background-size: 100%;
   background-repeat: no-repeat;
-  background-color: #B50029;
+  background-color: rgba(46, 46, 46, 1);
   font-family: DFLiJinHeiW8-GB;
   position: relative;
   padding-bottom: 30px;
 }
-.btn{
-  background-color: #B50029;
-  border: none;
-  border-radius: 1rem;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
-  letter-spacing: 2rem;
-}
+
 .card {
   background-color: #F6EED7;
   border-radius: 1rem;
   padding: 2.9rem 1.8rem 4.7rem;
   position: relative;
-  margin-top: -11rem;
+  margin-top: -9rem;
   .title {
     font-size: 3rem;
     font-weight: 600;
@@ -166,6 +158,17 @@ input:focus, textarea:focus{
 }
 input.error::placeholder,textarea.error::placeholder{
   color: #B50029;
+}
+
+.btn{
+  background-color: #B50029;
+  border: none;
+  border-radius: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #F6EED7;
+  flex: .8 !important;
+  // letter-spacing: 2rem;
 }
 
 </style>
