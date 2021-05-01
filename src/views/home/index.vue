@@ -13,13 +13,13 @@
               <input type="text" :class="{error: error === 'name'}" v-model="name" placeholder="您的姓名"/>
             </div>
             <div class="col">
-              <input type="text" :class="{error: error === 'phone'}" v-model="phone" placeholder="您的手机号"/>
+              <input type="text" maxlength="11" :class="{error: error === 'phone'}" v-model="phone" placeholder="您的手机号"/>
             </div>
           </div>
           <div class="row borderTop mt">
             <div class="col pos">
-              <textarea rows="3" maxlength="8" :class="{error: error === 'content'}" v-model="content" width="100%" placeholder="输入您想刻印在行李牌上的文案"/>
-              <span class="suffix">{{content.length}} /8</span>
+              <textarea rows="3" maxlength="8" :class="{error: error === 'content'}" v-model="content" width="100%" placeholder="输入您想刻印在行李牌上的话"/>
+              <span class="suffix">{{content.length}}/8</span>
             </div>
           </div>
           <div class="row" style="justify-content: center;">
@@ -52,14 +52,17 @@ export default {
       this.error = ''
       if (!this.name) {
         this.error= "name"
+         this.$alert('请输入您的姓名')
         return
       }
       if (!this.phone || isNaN(this.phone) || this.phone.length != 11) {
         this.error= "phone"
+        this.$alert('请输入11位数手机号码')
         return
       }
       if (!this.content) {
         this.error= "content"
+        this.$alert('请输入您的行李牌文案')
         return
       }
       HTTP({
@@ -71,18 +74,23 @@ export default {
           msg: this.content,
         }
       }).then( () => {
-          this.show = true
-       
+        this.show = true
+        this.name = ''
+        this.phone = ''
+        this.content = ''
       }).catch((res) => {
         console.log('失败', res)
          if(res.msg.indexOf('姓名') != -1){
             this.error= "name"
+            this.$alert('请输入您的姓名')
           }
           if(res.msg.indexOf('手机') != -1){
             this.error= "phone"
+            this.$alert('请输入11位数手机号码')
           }
           if(res.msg.indexOf('行李') != -1){
             this.error= "content"
+            this.$alert('请输入您的行李牌文案')
           }
       })
     }
@@ -167,7 +175,7 @@ input:focus, textarea:focus{
   border: none;
   outline: none;
 }
-input.error::placeholder,textarea.error::placeholder,input.error,textarea.error{
+input.error::placeholder,textarea.error::placeholder{
   color: #B50029;
 }
 
@@ -190,5 +198,6 @@ input.error::placeholder,textarea.error::placeholder,input.error,textarea.error{
   bottom: 15px;
   right: 20px;
   color: #C4B794;
+  font-size: 14px;
 }
 </style>

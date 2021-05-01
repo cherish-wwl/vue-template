@@ -3,8 +3,8 @@
     <div class="modalBody">
       <div class="card">
         <img width="30%" src="/img/success.png" />
-        <p class="text">请联系工作人员</p>
-        <img width="100%" src="/img/adv.png" />
+        <p class="text">请联系工作人员，领取行李牌</p>
+        <img width="100%" src="/img/adv.png?12323123" />
       </div>
       <div class="close" >
         <img width="36" @click="$emit('update:show',false)" src="/img/close.png"/>
@@ -38,7 +38,7 @@
 .text{
   font-size: 2rem;
   font-weight: 400;
-  color: #B50029;
+  color: #9c7708;
   line-height: 2;
   margin-bottom: 2rem;
 }
