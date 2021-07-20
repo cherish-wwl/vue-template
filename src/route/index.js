@@ -45,6 +45,7 @@ routes = routes.concat([
 ]);
 
 export default new VueRouter({
-  mode: "history",
+  // mode: "history",
+  // base: '/new/',
   routes: routes
 });
