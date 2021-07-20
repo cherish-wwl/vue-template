@@ -34,7 +34,6 @@ router.keys().forEach(key => {
     });
   }
 });
-console.log("routes", routes);
 routes = routes.concat([
   {
     path: "/",
