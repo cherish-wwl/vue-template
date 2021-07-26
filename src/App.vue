@@ -34,10 +34,13 @@ export default {
 
 <style>
 #app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
   min-width: 1920px;
-  min-height: 100vh;
+  /* min-height: 100vh;
+  line-height: 1; */
   background: linear-gradient(0deg, #0A0C63, #02042A);
+  position: relative;
+  overflow: hidden;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="select-area">
-    <div class="area" style="display:flex;">
+    <!-- <div class="area" style="display:flex;">
       <span class="label">区域</span>
       <select v-model="areaValue">
         <option value="0" checked>北京-通州</option>
       </select>
-    </div>
+    </div> -->
     <div style="display:flex;">
       <span class="label">日期</span>
       <input v-model="dateValue" type="date"/>

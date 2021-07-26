@@ -3,7 +3,7 @@
 		<div
 			ref="radar"
 			class="radar"
-			style="height:380px; width:440px; margin: auto;"
+			style="height:100%; width:90%; margin: auto;"
 		></div>
 	</div>
 </template>
@@ -16,7 +16,7 @@ export default {
 			option: {
 				textStyle: {
 					color: ["#00FFFF"],
-					fontSize: 16,
+					fontSize: this.remFontSize(),
 					fontWeight: 500,
 					margin: [
 						0, // 上
@@ -29,7 +29,7 @@ export default {
           width: '100px'
         },
 				radar: {
-          radius: 120 ,
+          radius: 90 ,
 					center: ["50%", "50%"],
 					splitArea: {
 						show: true,
@@ -96,9 +96,26 @@ export default {
 			}
 		};
 	},
+	methods: {
+		remFontSize() {
+			let oWidth = document.body.clientWidth || document.documentElement.clientWidth
+			let base = 16
+			if(oWidth <= 1280){
+				var fontSize = document.documentElement.style.fontSize;
+				return  Math.floor(base * fontSize * 0.5)
+			}else {
+				return base
+			}
+		}
+	},
 	mounted() {
 		this.myChart = echarts.init(this.$refs.radar);
-		this.myChart.setOption(this.option);
+		this.$nextTick(() => {
+			this.myChart.setOption(this.option);
+		})
+		window.addEventListener('resize',() => {
+			this.myChart.resize()
+		})
 	}
 };
 </script>
