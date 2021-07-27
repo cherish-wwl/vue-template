@@ -121,55 +121,153 @@ export default {
           },
         ],
       },
-      heartOption: {
+      heartOption:  {
         xAxis: {
-          show: false,
+          type: "category",
+          data: [],
+          max: 20,
+          axisLine: {
+            show: false,
+          },
         },
+
         yAxis: {
           type: "value",
-          scale: true,
-          "splitLine": {     //网格线
-            "show": false
-          }
+          min: "dataMin",
+          max: "dataMax",
+          minInterval: 1,
+          axisLabel: {
+            textStyle: {
+              color: "#09A5FF",
+            },
+          },
+
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          splitLine: {
+            show: false,
+          },
         },
         series: [
           {
-            name: "最高气温",
+            data: [
+              0,
+              73,
+              75,
+              76,
+              76,
+              73,
+              75,
+              70,
+              75,
+              73,
+              78,
+              75,
+              70,
+              75,
+              73,
+              78,
+              73,
+              71,
+              72,
+              69,
+              64,
+              60,
+              65,
+              70,
+              71,
+              70,
+              60,
+              63,
+              65,
+              62,
+              67,
+              63,
+              68,
+              73,
+              72,
+              68,
+              65,
+              70,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+            ],
             type: "line",
-            data: [10, 11, 13, 11, 12, 12, 9],
-            markPoint: {
-              data: [
-                { type: "max", name: "最大值" },
-                { type: "min", name: "最小值" },
-              ],
-            }
+            color: "#ff8181",
+              markPoint: {
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
           },
         ],
+        grid: {
+          // x: 50,
+          y: 25,
+          // x2: 50,
+          y2: 20,
+          right: 2
+        },
       },
       breathOption: {
         xAxis: {
-          show: false,
+          type: "category",
+          data: [],
+          max: 20,
+          axisLine: {
+            show: false,
+          },
         },
         yAxis: {
           type: "value",
-          scale: true,
-          "splitLine": {     //网格线
-            "show": false
-          }
+          min: "dataMin",
+          max: "dataMax",
+          minInterval: 1,
+           axisLabel: {
+            textStyle: {
+              color: "#09A5FF",
+            },
+          },
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          splitLine: {
+            show: false,
+          },
         },
         series: [
           {
-            name: "最高气温",
+            data: [17, 17, 16, 15, 17, 17, 16, 13, 16, 18, 18, 17, 16, 19, 16, 13, 15, 18, 15, 16, 16, 17, 
+19, 18, 15, 17, 19, 16, 14, 14, 16, 15, 18, 19, 18, 21, 18, 0, 0, 0, 0, 0, 0, 0],
             type: "line",
-            data: [10, 11, 13, 11, 12, 12, 9],
+            color: "#5AA9F3",
             markPoint: {
-              data: [
-                { type: "max", name: "最大值" },
-                { type: "min", name: "最小值" },
-              ],
-            }
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
           },
         ],
+        grid: {
+          // x: 50,
+          y: 25,
+          // x2: 30,
+          y2: 25,
+          right: 2
+        },
       },
     };
   },

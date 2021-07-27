@@ -34,6 +34,54 @@ export default {
     Quality,
     Healthy,
     Trend
+  },
+  mounted(){
+    function guid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    let clientID = '9VkKyF838peoHJO8'
+    let clientSecret = 'VHRAN4amCb8AWFDThSqFnSqEsnqfKywy'  
+   
+    let signatureNonce = guid()
+    
+    let hmac = this.CryptoJS.HmacSHA1(signatureNonce, clientSecret);
+
+    let signature = hmac.toString(this.CryptoJS.enc.Base64)
+    let timestamp = '2019-07-29T12:00:00Z'
+
+    this.$http({
+      method: 'POST',
+      url: `http://api.sleepthing.com/device/isThisDeviceValid?format=JSON&version=2019-07-29&signature=${signature}&signatureMethod=HMAC-SHA1&signatureVersion=1.0&signatureNonce=${signatureNonce}&timestamp=${timestamp}&clientID=${clientID}`,
+      data: {
+        devID: "40F5200E2EDA"
+      }
+    }).then(res => {
+      console.log('res',res)
+    })
+    this.$http({
+      method: 'GET',
+      url: `http://api.sleepthing.com/device/getDeviceInfo?format=JSON&version=2019-07-29&signature=${signature}&signatureMethod=HMAC-SHA1&signatureVersion=1.0&signatureNonce=${signatureNonce}&timestamp=${timestamp}&clientID=${clientID}`,
+      params: {
+        devID: "40F5200E2EDA"
+      }
+    }).then(res => {
+      console.log('res',res)
+    })
+    this.$http({
+      method: 'GET',
+      url: `http://api.sleepthing.com/data/getDaySleepReport?format=JSON&version=2019-07-29&signature=${signature}&signatureMethod=HMAC-SHA1&signatureVersion=1.0&signatureNonce=${signatureNonce}&timestamp=${timestamp}&clientID=${clientID}`,
+      params: {
+        devID: "40F5200E2EDA",
+        day: '2020-06-01',
+        outbedTime: 1547509561,
+      }
+    }).then(res => {
+      console.log('res',res)
+    })
   }
 };
 </script>
@@ -76,6 +124,7 @@ export default {
   .part1 {
     width: 450px;
     flex-shrink: 0;
+    position: relative;
   }
   .part2 {
     width: 440px;

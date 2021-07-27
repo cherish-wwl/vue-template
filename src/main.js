@@ -14,6 +14,10 @@ function getRem (pwidth, prem) {
   html.style.fontSize = oWidth / pwidth * prem + 'px'
 }
 
+import VueCryptojs from 'vue-cryptojs'
+ 
+Vue.use(VueCryptojs)
+
 getRem(1920, 1)
 window.onresize = function () {
   getRem(1920, 1)
