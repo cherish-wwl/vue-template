@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">睡眠健康</div>
-    <Radar />
+    <HealthyChart />
     <div class="detail_card">
       <div class="line">
         <label class="label">睡眠效率</label>
@@ -37,45 +37,46 @@
   </div>
 </template>
 <script>
-import Radar from './Radar'
+import HealthyChart from './HealthyChart.vue'
 export default {
   components: {
-    Radar
+    HealthyChart
   }
 }
 </script>
 <style lang="scss" scoped>
-.title{
+
+.title {
   font-size: 24px;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #ffffff;
   line-height: 40px;
   margin-bottom: 14px;
 }
-.detail_card{
+.detail_card {
   background-image: url("~@/assets/radar.png");
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	height: 450px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 450px;
   margin-top: 20px;
   padding: 20px 14px;
   .line {
     padding: 13px 30px 13px 35px;
-    background: #0F2089;
+    background: #0f2089;
     margin-bottom: 2px;
   }
   .label {
     font-size: 18px;
     font-weight: 400;
-    color: #16BAFF;
+    color: #16baff;
     line-height: 38px;
     width: 133px;
     display: inline-block;
   }
-  .value{ 
+  .value {
     font-size: 22px;
     font-weight: 500;
-    color: #00FFFF;
+    color: #00ffff;
     line-height: 38px;
   }
   .status {
@@ -92,9 +93,9 @@ export default {
     font-size: 16px;
     font-weight: 400;
     padding: 0 10px;
-    color: #FEFEFE;
+    color: #fefefe;
     line-height: 28px;
-    background: #036CD5;
+    background: #036cd5;
     border-radius: 4px;
     height: 28px;
     position: relative;

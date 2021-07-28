@@ -100,7 +100,7 @@ export default {
       hover: false,
       closeICon: require('@/assets/close.png'),
       hoverCloseICon: require('@/assets/close_hover.png'),
-      show: true,
+      show: false,
       detail: {},
       date: "",
       area: "",
