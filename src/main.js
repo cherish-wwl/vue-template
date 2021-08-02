@@ -22,6 +22,8 @@ getRem(1920, 1)
 window.onresize = function () {
   getRem(1920, 1)
 }
+
+
 new Vue({
   router,
   render: h => h(App),

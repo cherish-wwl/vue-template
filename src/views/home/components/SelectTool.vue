@@ -8,7 +8,7 @@
     </div> -->
     <div style="display:flex;">
       <span class="label">日期</span>
-      <input v-model="dateValue" type="date"/>
+      <input v-model="dateValue" type="date" @change="changeDate"/>
     </div>
   </div>
 </template>
@@ -17,16 +17,26 @@ export default {
   props:['area','date'],
   data() {
     return {
-      dateValue: '',
-      areaValue: '0'
+      dateValue: this.area,
+      areaValue: this.date
     }
   },
   watch:{
-    areaValue(val) {
+    areaValue(val){
       this.$emit('update:area',val)
     },
-    dateValue(val) {
-      this.$emit('update:date',val)
+    date: {
+      handler(val) {
+        console.log(val)
+        this.dateValue = val
+      },
+      immediate: true
+    },
+  },
+  methods:{
+    changeDate(){
+      this.$emit('update:date',this.dateValue)
+      this.$emit('change')
     }
   }
 }
@@ -48,7 +58,7 @@ export default {
 }
 select, input {
   height: 40px;
-  width: 180px;
+  width: 250px;
   background: #0F2089;
   border-radius: 20px;
   font-size: 16px;
@@ -56,7 +66,7 @@ select, input {
   padding: 0 10px 0 17px;
   border: none;
 }
-input{
-  width: 160px;
-}
+// input{
+//   width: 160px;
+// }
 </style>

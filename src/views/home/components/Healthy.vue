@@ -1,36 +1,46 @@
 <template>
   <div>
     <div class="title">睡眠健康</div>
-    <HealthyChart />
+    <HealthyChart :reportData="reportData"/>
     <div class="detail_card">
       <div class="line">
         <label class="label">睡眠效率</label>
-        <span class="value"> 4小时43分钟</span>
-        <span class="status"></span>
+        <span class="value"> {{reportData.sleepEfficiency || '--'}}%</span>
+        <span class="status green" v-if="reportData.sleepEfficiency >= 90"></span>
+        <span class="status yellow" v-else-if="reportData.sleepEfficiency >= 85"></span>
+        <span class="status " v-else></span>
       </div>
       <div class="line">
         <label class="label">体动频率</label>
-        <span class="value"> 4小时43分钟</span>
-        <span class="status"></span>
+        <span class="value"> {{reportData.movCounts || '--'}} 次/小时</span>
+        <span class="status green" v-if="reportData.movCounts < 15"></span>
+        <span class="status yellow" v-else-if="reportData.movCounts <= 18"></span>
+        <span class="status " v-else></span>
       </div>
       <div class="line">
         <label class="label">基准心率</label>
-        <span class="value"> 4小时43分钟</span>
-        <span class="status"></span>
+        <span class="value"> {{reportData.avgHR}}次/分</span>
+        <span class="status green" v-if="reportData.avgHR <= 65"></span>
+        <span class="status yellow" v-else-if="reportData.avgHR <= 69"></span>
+        <span class="status " v-else></span>
       </div>
       <div class="line">
         <label class="label">基准呼吸率</label>
-        <span class="value"> 4小时43分钟</span>
-        <span class="status"></span>
+        <span class="value"> {{reportData.avgBR}}次/分</span>
+        <span class="status green" v-if="reportData.avgBR <= 20 && reportData.avgBR >= 12"></span>
+        <span class="status yellow" v-else-if="(reportData.avgBR <= 11 && reportData.avgBR >= 10) || (reportData.avgBR <= 24 && reportData.avgBR >= 21)"></span>
+        <span class="status " v-else></span>
       </div>
       <div class="line">
         <label class="label">心率变异性</label>
-        <span class="value"> 238ms</span>
+        <span class="value"> {{reportData.SDNN}}ms</span>
         <span class="btn">PRO</span>
       </div>
       <div class="line">
         <label class="label">疲劳程度</label>
-        <span class="value"> 47</span>
+        <span class="value"> 
+          {{reportData.fatigue}}
+        </span>
         <span class="btn">PRO</span>
       </div>
     </div>
@@ -39,6 +49,14 @@
 <script>
 import HealthyChart from './HealthyChart.vue'
 export default {
+  props:{
+    reportData: {
+      type: Object,
+      default: function (){
+        return {}
+      }
+    }
+  },
   components: {
     HealthyChart
   }
@@ -82,11 +100,17 @@ export default {
   .status {
     width: 10px;
     height: 10px;
-    background: red;
+    background: #FC7369;
     border-radius: 50%;
     float: right;
     position: relative;
     top: 15px;
+    &.green {
+      background: #00FB96;
+    }
+    &.yellow {
+      background: #FFDE33;
+    }
   }
   .btn {
     float: right;

@@ -10,6 +10,14 @@
 <script>
 import * as echarts from "echarts";
 export default {
+	props:{
+    reportData: {
+      type: Object,
+      default: function (){
+        return {}
+      }
+    }
+  },
 	data() {
 		return {
 			myChart: "",
@@ -48,14 +56,14 @@ export default {
 					},
 					// shape: 'circle',
 					indicator: [
-						{ name: "睡眠时长", max: 6500 },
-						{ name: "入睡时刻", max: 16000 },
-						{ name: "入睡时长", max: 30000 },
-						{ name: "深度睡眠", max: 38000 },
-						{ name: "做梦多少", max: 52000 },
-						{ name: "睡中觉醒", max: 52000 },
-						{ name: "躁动不安", max: 52000 },
-						{ name: "睡眠中断", max: 25000 }
+						{ name: "睡眠时长", max: 20 },
+						{ name: "入睡时刻", max: 20 },
+						{ name: "入睡时长", max: 20 },
+						{ name: "深度睡眠", max: 20 },
+						{ name: "做梦多少", max: 20 },
+						{ name: "睡中觉醒", max: 20 },
+						{ name: "躁动不安", max: 20 },
+						{ name: "睡眠中断", max: 20 }
 					]
 				},
 				series: [
@@ -64,17 +72,7 @@ export default {
             symbolSize: 6,
 						data: [
 							{
-								value: [
-									4200,
-									3000,
-									20000,
-									35000,
-									50000,
-									18000,
-									3000,
-									20000,
-									35000
-								],
+								value: [8,8,8,8,8,8,8,8],
 								name: "",
 								areaStyle: {
 									color: "#FC7369",
@@ -96,10 +94,27 @@ export default {
 			}
 		};
 	},
+	watch:{
+		reportData(val){
+			this.myChart.dispose()
+			let option =  {...this.option}
+			option.series = [...this.option.series]
+			option.series[0].data.value = val.arrayScore
+			
+			option.radar.indicator = option.radar.indicator.map( (e,i)=> {
+				e.max = val.arrayScoreAssigned[i] + 1
+				return e
+			})
+			this.$nextTick(() => {
+				this.myChart = echarts.init(this.$refs.radar);
+				this.myChart.setOption(this.option);
+			})
+		}
+	},
 	methods: {
 		remFontSize() {
 			let oWidth = document.body.clientWidth || document.documentElement.clientWidth
-			let base = 16
+			let base = 12
 			if(oWidth <= 1280){
 				var fontSize = document.documentElement.style.fontSize;
 				return  Math.floor(base * fontSize * 0.5)
@@ -114,7 +129,7 @@ export default {
 			this.myChart.setOption(this.option);
 		})
 		window.addEventListener('resize',() => {
-			this.myChart.resize()
+			this.myChart && this.myChart.resize()
 		})
 	}
 };

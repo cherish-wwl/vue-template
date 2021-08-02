@@ -2,13 +2,21 @@
   <div>
     <div class="title">睡眠趋势</div>
     <div class="card">
-      <DayReport />
+      <DayReport :reportData="reportData"/>
     </div>
   </div>
 </template>
 <script>
 import DayReport from './DayReport'
 export default {
+  props:{
+    reportData: {
+      type: Object,
+      default: function (){
+        return {}
+      }
+    }
+  },
   components: {
     DayReport
   }

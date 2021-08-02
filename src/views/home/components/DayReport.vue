@@ -5,19 +5,19 @@
       <div class="summary">
         <div class="part">
           <div class="label">上床</div>
-          <div>{{ startTime }}</div>
+          <div>{{ reportData.inbedTime | formatTime }}</div>
         </div>
         <div class="part">
           <div class="label">入睡</div>
-          <div>{{ sleepTime }}</div>
+          <div>{{ reportData.asleepTime | formatTime }}</div>
         </div>
         <div class="part">
-          <div class="label">上床</div>
-          <div>{{ wakeTime }}</div>
+          <div class="label">醒来</div>
+          <div>{{ reportData.awakeTime | formatTime }}</div>
         </div>
         <div class="part">
-          <div class="label">上床</div>
-          <div>{{ upTime }}</div>
+          <div class="label">起床</div>
+          <div>{{ reportData.outbedTime | formatTime }}</div>
         </div>
       </div>
       <div class="chart-area">
@@ -25,31 +25,31 @@
       </div>
       <div class="summary">
         <div>
-          <p class="label2">清醒</p>
-          <p class="val2">24%</p>
+          <p class="label2" style="color:#FFDE33">清醒</p>
+          <p class="val2" style="color:#FFDE33">{{reportData.soberPercent || '--'}}%</p>
         </div>
         <div>
-          <p class="label2">梦境</p>
-          <p class="val2">24%</p>
+          <p class="label2" style="color: #FF9933;">梦境</p>
+          <p class="val2" style="color: #FF9933;">{{reportData.dreamPercent || '--'}}%</p>
         </div>
         <div>
-          <p class="label2">浅睡</p>
-          <p class="val2">24%</p>
+          <p class="label2" style="color:#0FE9BA;">浅睡</p>
+          <p class="val2" style="color:#0FE9BA;">{{reportData.lightSleepPercent || '--'}}%</p>
         </div>
         <div>
-          <p class="label2">中睡</p>
-          <p class="val2">24%</p>
+          <p class="label2" style="color:#09A5FF;">中睡</p>
+          <p class="val2" style="color:#09A5FF;">{{reportData.moderateSleepPercent || '--'}}%</p>
         </div>
         <div>
-          <p class="label2">深睡</p>
-          <p class="val2">24%</p>
+          <p class="label2" style="color:#660099;">深睡</p>
+          <p class="val2" style="color:#660099;">{{reportData.deepPercent || '--'}}%</p>
         </div>
       </div>
     </div>
     <div class="heart_chart_card">
       <div class="chart-title">
         心率（次/分）
-        <span>82</span>
+        <span>{{reportData.avgHR}}</span>
       </div>
       <div class="chart_div">
         <div ref="heartLine" style="width: 100%; height:100%"></div>
@@ -58,7 +58,7 @@
     <div class="heart_chart_card">
       <div class="chart-title">
         呼吸率（次/分）
-        <span>82</span>
+        <span>{{reportData.avgBR}}</span>
       </div>
       <div class="chart_div">
         <div ref="breathLine" style="width: 100%; height:100%"></div>
@@ -67,7 +67,7 @@
     <div class="heart_chart_card">
       <div class="chart-title">
         体动（次/夜）
-        <span>82</span>
+        <span>{{reportData.movCounts}}</span>
       </div>
       <div class="chart_div">
         <div ref="moveLine" style="width: 100%; height:100%"></div>
@@ -77,29 +77,36 @@
 </template>
 <script>
 import * as echarts from "echarts";
+
+import moment from 'moment'
 export default {
+  props:{
+    reportData: {
+      type: Object,
+      default: function (){
+        return {}
+      }
+    }
+  },
   data() {
     return {
-      startTime: "21:38",
-      sleepTime: "21:38",
-      wakeTime: "21:38",
-      upTime: "21:38",
       myChart: "",
       heartChart: "",
       breathChart: "",
       moveChart: "",
       option: {
         grid: {
-          x: 0,
-          y2: 100,
+          // x: 100,
+          // y2: 100,
           // x: 20,
           left: '5%',
           right: "4%",
-          // bottom: "3%",
-          // containLabel: true
+          top: "10%",
+          bottom: "20%",
         },
         xAxis: {
           type: "category",
+          offset:-2,
           boundaryGap : [0,0],
           axisLine: {
             show:false,
@@ -111,26 +118,30 @@ export default {
             color:'#16BAFF',
             fontSize: 12
           },
-        data: ["19:20", "19:20", "19:20", "19:20", "19:20", "19:20", "19:20"],
+          data: [],
         },
         yAxis: {
-          offset: -20,
+          offset: 10,
           type: "value",
           scale: true,
-          max: 450,
+          max: 5,
           min: 0,
           boundaryGap : [0,0],
           splitNumber: 4,   
           axisLabel: {
+            inside: true,
             formatter: function(value) {
               var texts = [];
-              if (value == 0) {
+              console.log('texts')
+              if (value > 4) {
+                texts.push("");
+              } else if (value == 4) {
                 texts.push("{a|深}");
-              } else if (value <= 100) {
+              } else if (value <= 3 && value > 2) {
                 texts.push("{b|中}");
-              } else if (value <= 200) {
-                texts.push("{c|浅}");
-              } else if (value <= 300) {
+              } else if (value <= 2 && value > 1) {
+                texts.push("{c|浅}" );
+              } else if (value <= 1  && value > 0) {
                 texts.push("{d|梦}");
               } else {
                 texts.push("{e|清}");
@@ -140,23 +151,23 @@ export default {
             rich: {
               a: {
                   color: '#FFDE33',
-                  lineHeight: 10
+                  lineHeight: 15
               },
               b: {
                   color: '#FF9933',
-                  lineHeight: 10
+                  lineHeight: 15
               },
               c: {
                   color: '#0FE9BA',
-                  lineHeight: 10
+                  lineHeight: 15
               },
               d: {
                   color: '#09A5FF',
-                  lineHeight: 10
+                  lineHeight: 15
               },
               e: {
                   color: '#660099',
-                  lineHeight: 10
+                  lineHeight: 15
               },
              },
             fontSize: 9,
@@ -181,59 +192,14 @@ export default {
               color:"#0FE9BA",
               width: 1
             },
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: [],
           },
         ],
       },
       heartOption: {
         xAxis: {
           type: "category",
-          data: [
-              0,
-              73,
-              75,
-              76,
-              76,
-              73,
-              75,
-              70,
-              75,
-              73,
-              78,
-              75,
-              70,
-              75,
-              73,
-              78,
-              73,
-              71,
-              72,
-              69,
-              64,
-              60,
-              65,
-              70,
-              71,
-              70,
-              60,
-              63,
-              65,
-              62,
-              67,
-              63,
-              68,
-              73,
-              72,
-              68,
-              65,
-              70,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-            ],
+          data: [],
           axisLine: {
             show: false,
           },
@@ -263,52 +229,7 @@ export default {
         },
         series: [
           {
-            data: [
-              0,
-              73,
-              75,
-              76,
-              76,
-              73,
-              75,
-              70,
-              75,
-              73,
-              78,
-              75,
-              70,
-              75,
-              73,
-              78,
-              73,
-              71,
-              72,
-              69,
-              64,
-              60,
-              65,
-              70,
-              71,
-              70,
-              60,
-              63,
-              65,
-              62,
-              67,
-              63,
-              68,
-              73,
-              72,
-              68,
-              65,
-              70,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-            ],
+            data: [],
             symbol: "none",
             lineStyle:{
               color:"#0FE9BA",
@@ -341,52 +262,7 @@ export default {
       breathOption: {
         xAxis: {
           type: "category",
-          data:[
-              17,
-              17,
-              16,
-              15,
-              17,
-              17,
-              16,
-              13,
-              16,
-              18,
-              18,
-              17,
-              16,
-              19,
-              16,
-              13,
-              15,
-              18,
-              15,
-              16,
-              16,
-              17,
-              19,
-              18,
-              15,
-              17,
-              19,
-              16,
-              14,
-              14,
-              16,
-              15,
-              18,
-              19,
-              18,
-              21,
-              18,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-          ],
+          data:[],
           show: false,
           axisLine: {
             show: false,
@@ -415,52 +291,7 @@ export default {
         },
         series: [
           {
-            data: [
-              17,
-              17,
-              16,
-              15,
-              17,
-              17,
-              16,
-              13,
-              16,
-              18,
-              18,
-              17,
-              16,
-              19,
-              16,
-              13,
-              15,
-              18,
-              15,
-              16,
-              16,
-              17,
-              19,
-              18,
-              15,
-              17,
-              19,
-              16,
-              14,
-              14,
-              16,
-              15,
-              18,
-              19,
-              18,
-              21,
-              18,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-            ],
+            data: [],
             symbol: "none",
             lineStyle:{
               color:"#0FE9BA",
@@ -495,6 +326,7 @@ export default {
           type: "category",
           data: [],
           max: 20,
+          show: false,
           axisLine: {
             show: false,
           },
@@ -521,47 +353,8 @@ export default {
           },
         },
         series: [
-          {
-            data: [
-              75,
-              557,
-              103,
-              280,
-              136,
-              51,
-              149,
-              121,
-              85,
-              130,
-              56,
-              133,
-              48,
-              93,
-              639,
-              395,
-              155,
-              684,
-              69,
-              263,
-              54,
-              29,
-              400,
-              166,
-              66,
-              80,
-              121,
-              881,
-              32,
-              93,
-              49,
-              3,
-              3,
-              15,
-              7,
-              3,
-              2,
-              3,
-            ],
+          { 
+            data: [],
             lineStyle:{
               color:"#0FE9BA",
               width: 1
@@ -586,6 +379,67 @@ export default {
         },
       },
     };
+  },
+  filters:{
+    formatTime(value) {
+      if(!value) return '--'
+      return moment(value).format('hh:mm')
+    },
+  },
+  watch:{
+    reportData(val){
+       let option = {
+        ...this.option
+      }
+      option.xAxis = {
+        ...option.xAxis,
+        data: val.timeAxis
+      }
+      option.series[0] = {
+        ...option.series[0],
+        data: val.sleepStage.map(e => e > 0 ? e : 1)
+      }
+      this.myChart.setOption(option)
+
+      let heartOption = {
+        ...this.heartOption
+      }
+      heartOption.xAxis = {
+        ...heartOption.xAxis,
+        data: val.arrayHR
+      }
+      heartOption.series[0] = {
+        ...heartOption.series[0],
+        data: val.arrayHR
+      }
+      this.heartChart.setOption(heartOption)
+
+      let breathOption = {
+        ...this.breathOption
+      }
+      breathOption.xAxis = {
+        ...breathOption.xAxis,
+        data: val.arrayBR
+      }
+      breathOption.series[0] = {
+        ...breathOption.series[0],
+        data: val.arrayBR
+      }
+
+      this.breathChart.setOption(breathOption)
+      let moveOption = {
+        ...this.moveOption
+      }
+      moveOption.xAxis = {
+        ...moveOption.xAxis,
+        data: val.arrayMov
+      }
+      moveOption.series[0] = {
+        ...moveOption.series[0],
+        data: val.arrayMov
+      }
+      this.moveChart.setOption(moveOption)
+    }
   },
   mounted() {
     var chartDom = this.$refs.stepLine;
