@@ -11,7 +11,8 @@ instance.interceptors.request.use((config) => {
 },err => Promise.reject(err))
 
 instance.interceptors.response.use((response) => {
-  const { code } = response 
+  console.log('response',response)
+  const { code } = response.data
   if(code !== 0) {
     //$alert(msg)
     return Promise.reject(response.data)

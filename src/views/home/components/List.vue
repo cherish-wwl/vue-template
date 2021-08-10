@@ -1,6 +1,6 @@
 <template>
   <div class="column1">
-    <SelectTool :area.sync="area" :date.sync="date" @change="changeDate"/>
+    <SelectTool :area.sync="area" :date.sync="date" @change="changeDate" />
     <div class="card">
       <table>
         <thead>
@@ -28,7 +28,7 @@
               <span v-if="item.status === 3"> 离床</span>
             </td> -->
             <td class="isLive">
-              <button class="btn" @click.stop="showDetail(item)">
+              <button class="btn" @click.stop="showDetail(item, index)">
                 {{ item.isLive ? "立即查看" : "暂无监测" }}
               </button>
             </td>
@@ -37,9 +37,11 @@
       </table>
     </div>
     <div class="detail" v-show="show">
-      <div class="tit">{{dateText}} 生命体征实时监控</div>
+      <div class="tit">{{ dateText }} 生命体征实时监控</div>
       <div class="inner">
-        <div class="tizheng"><img :src="imgMap[stateText]" /> {{stateText}}</div>
+        <div class="tizheng">
+          <img :src="imgMap[stateText]" /> {{ stateText }}
+        </div>
         <div class="num_line">
           <div class="">
             <div class="num">{{ HR }}</div>
@@ -64,7 +66,7 @@
               :value="PHR"
               max="20"
             ></progress>
-            <span class="text_value">{{PHR}}</span>
+            <span class="text_value">{{ PHR }}</span>
           </div>
         </div>
         <div class="fei_area">
@@ -81,7 +83,7 @@
               :value="PBR"
               max="20"
             ></progress>
-            <span class="text_value">{{PBR}}</span>
+            <span class="text_value">{{ PBR }}</span>
           </div>
         </div>
         <img
@@ -98,7 +100,7 @@
 <script>
 import * as echarts from "echarts";
 import SelectTool from "./SelectTool";
-import moment from 'moment'
+import moment from "moment";
 export default {
   components: {
     SelectTool,
@@ -110,86 +112,86 @@ export default {
       hoverCloseICon: require("@/assets/close_hover.png"),
       show: false,
       detail: {},
-      date: moment(new Date()).format('YYYY-MM-DD'),
+      date: moment(new Date()).format("YYYY-MM-DD"),
       area: "",
       imgMap: {
-        '安静': require('@/assets/anjing.png'),
-        '离床': require('@/assets/lichuang.png'),
-        '体动': require('@/assets/tidong.png')
+        安静: require("@/assets/anjing.png"),
+        离床: require("@/assets/lichuang.png"),
+        体动: require("@/assets/tidong.png"),
       },
       clickIndex: 0,
       tableList: [
         {
           name: "张三",
-          devID: '40F5200F855E',
+          devID: "40F5200F855E",
           status: 1,
           sleepTime: "2020-03-21",
           isLive: true,
         },
         {
           name: "张三1",
-          devID: '40F5200E6E01',
+          devID: "40F5200E6E01",
           status: 2,
           sleepTime: "2020-03-21",
           isLive: true,
         },
         {
           name: "张三",
-          devID: '40F5200EF336',
+          devID: "40F5200EF336",
           status: 3,
           sleepTime: "2020-03-21",
           isLive: false,
         },
         {
           name: "张三",
-          devID: '40F5200FD01F',
+          devID: "40F5200FD01F",
           status: 1,
           sleepTime: "2020-03-21",
           isLive: true,
         },
         {
           name: "张三",
-          devID: '40F5200FE309',
+          devID: "40F5200FE309",
           status: 1,
           sleepTime: "2020-03-21",
           isLive: true,
         },
-        
+
         {
           name: "张三",
-          devID: '40F5200FD476',
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "张三",
-          devID: '40F5200E3B8E',
+          devID: "40F5200FD476",
           status: 1,
           sleepTime: "2020-03-21",
           isLive: true,
         },
         {
           name: "张三",
-          devID: '40F5200EFA7B',
+          devID: "40F5200E3B8E",
           status: 1,
           sleepTime: "2020-03-21",
           isLive: true,
         },
         {
           name: "张三",
-          devID: '40F5200E879A',
+          devID: "40F5200EFA7B",
           status: 1,
           sleepTime: "2020-03-21",
           isLive: true,
         },
         {
           name: "张三",
-          devID: '40F5200E2EDA',
+          devID: "40F5200E879A",
           status: 1,
           sleepTime: "2020-03-21",
           isLive: true,
-        }
+        },
+        {
+          name: "张三",
+          devID: "40F5200E2EDA",
+          status: 1,
+          sleepTime: "2020-03-21",
+          isLive: true,
+        },
       ],
       chart_HR: null,
       chart_BR: null,
@@ -312,8 +314,8 @@ export default {
       URL_SERVER_SOCKET: "http://api.sleepthing.com",
       connect: false,
       state: null,
-      HR: '- -',
-      BR: '- -',
+      HR: "- -",
+      BR: "- -",
       PBR: 0,
       PHR: 0,
       count_data_chart: 0,
@@ -334,31 +336,32 @@ export default {
       preStateisSensing: "",
       count_data_analysis: 0,
       ajustBreathAnimate: 1,
-      stateText: '',
-      dateText: ''
+      stateText: "",
+      dateText: "",
     };
   },
   mounted() {
     this.chart_HR = echarts.init(this.$refs.chartHR);
     this.chart_BR = echarts.init(this.$refs.chartBR);
-    this.dateText = moment(new Date()).format('YYYY-MM-DD')
-
+    this.dateText = moment(new Date()).format("YYYY-MM-DD");
 
     this.ioSocket = window.io.connect(this.URL_SERVER_SOCKET);
 
     this.ioSocket.on("connect", () => {
       //- 收到server的连接确认
-      console.log('12121')
+      console.log("ioSocket connected");
       this.connect = true;
     });
     this.ioSocket.on("data_RT", (data) => {
       //data = [state, HR, BR]
+      console.log("devID", this.devID);
+      console.log("ioSocket data", data);
       this.state = data[0];
       this.HR = data[1];
       this.BR = data[2];
       if (this.state === -1) {
         //state = -1：说明是心跳自适应检测中
-        this.this.switch2SensingState();
+        this.switch2SensingState();
         this.count_outbed = 0;
         this.count_still = 0;
         this.preStateisSensing = true;
@@ -434,23 +437,183 @@ export default {
       }
     });
     this.$nextTick(() => {
-      this.changeDate()
-    })
+      this.changeDate();
+    });
   },
   methods: {
+    init() {
+      this.data = {
+        ...this.data,
+        option_chart_HR: {
+          xAxis: {
+            type: "category",
+            data: [],
+            max: 20,
+            axisLine: {
+              show: false,
+            },
+          },
+
+          yAxis: {
+            type: "value",
+            min: "dataMin",
+            max: "dataMax",
+            minInterval: 1,
+            axisLabel: {
+              textStyle: {
+                color: "#00FFFF",
+              },
+            },
+
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            splitLine: {
+              show: false,
+            },
+          },
+          series: [
+            {
+              data: [],
+              type: "line",
+              color: "#ff8181",
+              symbol: false,
+              markLine: {
+                data: [
+                  {
+                    type: "average",
+                    name: "平均值",
+                    label: {
+                      show: false,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+          grid: {
+            // x: 50,
+            y: 25,
+            // x2: 50,
+            y2: 20,
+            right: 2,
+          },
+        },
+        option_chart_BR: {
+          xAxis: {
+            type: "category",
+            data: [],
+            max: 20,
+            axisLine: {
+              show: false,
+            },
+          },
+          yAxis: {
+            type: "value",
+            min: "dataMin",
+            max: "dataMax",
+            minInterval: 1,
+            axisLabel: {
+              textStyle: {
+                color: "#00FFFF",
+              },
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            splitLine: {
+              show: false,
+            },
+          },
+          series: [
+            {
+              data: [],
+              symbol: false,
+              type: "line",
+              color: "#5AA9F3",
+              markLine: {
+                data: [
+                  {
+                    type: "average",
+                    name: "平均值",
+                    label: {
+                      show: false,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+          grid: {
+            // x: 50,
+            y: 25,
+            // x2: 30,
+            y2: 25,
+            right: 2,
+          },
+        },
+        devID: "",
+        ioSocket: "",
+        URL_SERVER_SOCKET: "http://api.sleepthing.com",
+        connect: false,
+        state: null,
+        HR: "- -",
+        BR: "- -",
+        PBR: 0,
+        PHR: 0,
+        count_data_chart: 0,
+        data_HR: [],
+        data_BR: [],
+        data_analysis_HR: [],
+        data_analysis_BR: [],
+        avgHR: 0,
+        maxHR: 0,
+        minHR: 0,
+        avgBR: 0,
+        maxBR: 0,
+        minBR: 0,
+        bodyStatus: 0,
+        inbed: false,
+        count_outbed: 0,
+        count_still: 0,
+        preStateisSensing: "",
+        count_data_analysis: 0,
+        ajustBreathAnimate: 1,
+        stateText: "",
+        dateText: "",
+      };
+    },
     changeDate() {
-        this.$emit('refresh',{item:this.tableList[this.clickIndex],day: moment(this.date).format('YYYY-MM-DD')})
+      this.$emit("refresh", {
+        item: this.tableList[this.clickIndex],
+        day: moment(this.date).format("YYYY-MM-DD"),
+      });
     },
     handlerClick(item, index) {
       this.clickIndex = index;
-      this.show = false
-      this.$emit('refresh',{item,day: moment(this.date).format('YYYY-MM-DD')})
+      this.show = false;
+      this.$emit("refresh", {
+        item,
+        day: moment(this.date).format("YYYY-MM-DD"),
+      });
     },
-    showDetail(item) {
+    showDetail(item, index) {
+      this.init()
       this.detail = item;
       this.show = true;
-      this.devID = item.devID; //此为测试用，实际为url中携带的devID
-
+      this.devID = item.devID; 
+      
+      this.clickIndex = index;
+      this.$emit("refresh", {
+        item,
+        day: moment(this.date).format("YYYY-MM-DD"),
+      });
       if (this.connect) {
         this.ioSocket.emit("ASK_JOIN_T", {
           devId: this.devID,
@@ -466,7 +629,7 @@ export default {
       //     'animation': 'rotate 3s infinite linear'
       // });
       console.log("检测中，请保持静止");
-      this.stateText = '检测中，请保持静止'
+      this.stateText = "检测中，请保持静止";
       // $('#tip-text').text('检测中，请保持静止');
       // $('#icon-HR').css({
       //     '-webkit-animation': '',
@@ -484,7 +647,7 @@ export default {
       // });
       // $('#tip-img').attr('src', 'images/inbed.png');
       // $('#tip-text').text('安静');
-      this.stateText = '安静'
+      this.stateText = "安静";
       if (this.HR == 0) {
         this.HR = "- -";
         /* $('#HR').css('color', '#E5E5E5');
@@ -635,7 +798,7 @@ export default {
       if (this.count_data_analysis < 20) {
         this.count_data_analysis++;
         this.PBR = this.count_data_analysis;
-        this.PHR = this.count_data_analysis
+        this.PHR = this.count_data_analysis;
         // this.$emit.progressHR.value = this.count_data_analysis;
         // this.$emit.progressBR.value = this.count_data_analysis;
       }
