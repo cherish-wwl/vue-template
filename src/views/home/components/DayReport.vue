@@ -116,12 +116,13 @@ export default {
           },
           axisLabel:{
             color:'#16BAFF',
-            fontSize: 12
+            fontSize: 12,
+            showMaxLabel: true
           },
           data: [],
         },
         yAxis: {
-          offset: 10,
+          offset: 20,
           type: "value",
           scale: true,
           max: 5,
@@ -325,7 +326,6 @@ export default {
         xAxis: {
           type: "category",
           data: [],
-          max: 20,
           show: false,
           axisLine: {
             show: false,
@@ -334,13 +334,13 @@ export default {
         yAxis: {
           scale: true,
           type: "value",
-          splitNumber:1,
-          showMinLabel: true,
-          showMaxLabel: true,
+          min: function(v) {return v.min},
+          max: function(v) {return v.max},
           axisLabel: {
             textStyle: {
               color: "#09A5FF",
             },
+            interval:200
           },
           axisLine: {
             show: false,
@@ -362,19 +362,13 @@ export default {
             symbol: "none",
             type: "line",
             color: "#5AA9F3",
-            markPoint: {
-              data: [
-                { type: "max", name: "最大值" },
-                { type: "min", name: "最小值" },
-              ],
-            },
+            
           },
         ],
         grid: {
-          x: 40,
-          // y: 25,
+          x: 50,
           // x2: 30,
-          y2: 50,
+          y2: 100,
           right: 2,
         },
       },

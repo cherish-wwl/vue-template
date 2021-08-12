@@ -97,6 +97,7 @@ export default {
 	watch:{
 		reportData(val){
 			this.myChart.dispose()
+			if(!val.arrayScore.length) return
 			let option =  {...this.option}
 			option.series = [...this.option.series]
 			option.series[0].data.value = val.arrayScore

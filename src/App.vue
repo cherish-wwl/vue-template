@@ -7,6 +7,8 @@
 </template>
 
 <script>
+
+  console.log('process',process)
 import _ from "lodash";
 const layout = require.context("./layouts", false, /.vue/);
 const layouts = {};

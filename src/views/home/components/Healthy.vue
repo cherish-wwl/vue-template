@@ -12,7 +12,7 @@
       </div>
       <div class="line">
         <label class="label">体动频率</label>
-        <span class="value"> {{reportData.movCounts || '--'}} 次/小时</span>
+        <span class="value"> {{reportData.movCounts !== undefined ? reportData.movCounts: '--'}} 次/小时</span>
         <span class="status green" v-if="reportData.movCounts < 15"></span>
         <span class="status yellow" v-else-if="reportData.movCounts <= 18"></span>
         <span class="status " v-else></span>

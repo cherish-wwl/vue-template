@@ -70,12 +70,15 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
+        
           axisLine: {
             show: false,
           },
           axisLabel: {
             color: "#16BAFF",
             fontSize: 12,
+            showMinLable: true,
+            showMaxLabel: true
           },
           axisTick: {
             show: false,

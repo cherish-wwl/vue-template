@@ -107,6 +107,7 @@ export default {
       if (!time) return "--";
       let outbedDate = moment(data.outbedTime).format("YYYY-MM-DD HH:mm:ss");
       let inbedDate = moment(data.inbedTime).format("YYYY-MM-DD HH:mm:ss");
+      console.log('+++++++++++++++',outbedDate,inbedDate)
       let t = new Date(outbedDate).getTime() - new Date(inbedDate).getTime();
       console.log(new Date(data.outbedTime));
       console.log(new Date(data.inbedTime), t);

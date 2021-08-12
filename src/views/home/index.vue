@@ -59,7 +59,7 @@ export default {
     let hmac = this.CryptoJS.HmacSHA1(this.signatureNonce, this.clientSecret);
 
     this.signature = hmac.toString(this.CryptoJS.enc.Base64)
-    this.timestamp = '2019-07-29T12:00:00Z'
+    this.timestamp = moment(new Date()).format("YYYY-MM-DD") +'T12:00:00Z'
 
 
   },
@@ -72,7 +72,7 @@ export default {
       const { devID } = item
       this.$http({
         method: 'GET',
-        url: `http://api.sleepthing.com/data/getDaySleepReport?format=JSON&version=2019-07-29&signature=${this.signature}&signatureMethod=HMAC-SHA1&signatureVersion=1.0&signatureNonce=${this.signatureNonce}&timestamp=${this.timestamp}&clientID=${this.clientID}`,
+        url: `http://api.sleepthing.com/data/getDaySleepReport?format=JSON&version=${moment(new Date()).format("YYYY-MM-DD")}&signature=${this.signature}&signatureMethod=HMAC-SHA1&signatureVersion=1.0&signatureNonce=${this.signatureNonce}&timestamp=${this.timestamp}&clientID=${this.clientID}`,
         params: {
           devID: devID,
           day: day,
@@ -85,7 +85,15 @@ export default {
           return moment(e).format('HH:mm')
         })
       }).catch(() => {
-        this.reportData = {}
+        this.reportData = {
+          arrayScoreAssigned: [],
+          arrayScore:[],
+          sleepStage: [],
+          arrayHR:[],
+          arrayBR:[],
+          arrayMov: [],
+          timeAxis: []
+        }
       
         // this.reportData = {
         //   devID: devID,

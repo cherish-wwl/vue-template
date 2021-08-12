@@ -5,7 +5,7 @@
       <table>
         <thead>
           <tr>
-            <th width="15%">姓名</th>
+            <th width="25%">姓名</th>
             <th>睡眠日期</th>
             <!-- <th>设备状态</th> -->
             <th>当前监测</th>
@@ -20,7 +20,7 @@
             :class="{ active: index === clickIndex }"
             @click="handlerClick(item, index)"
           >
-            <td class="name" width="15%">{{ item.name }}</td>
+            <td class="name" width="25%">{{ item.name }}</td>
             <td class="sleepTime">{{ dateText }}</td>
             <!-- <td :class="'status status_' + item.status">
               <span v-if="item.status === 1"> 体动</span>
@@ -37,7 +37,7 @@
       </table>
     </div>
     <div class="detail" v-show="show">
-      <div class="tit">{{ dateText }} 生命体征实时监控</div>
+      <div class="tit">{{ nowDateText }} 生命体征实时监控</div>
       <div class="inner">
         <div class="tizheng">
           <img :src="imgMap[stateText]" /> {{ stateText }}
@@ -150,7 +150,7 @@ export default {
           isLive: true,
         },
         {
-          name: "张三",
+          name: "40F5200FE309",
           devID: "40F5200FE309",
           status: 1,
           sleepTime: "2020-03-21",
@@ -203,6 +203,8 @@ export default {
           axisLine: {
             show: false,
           },
+
+          boundaryGap: ['50%', '20%'],
         },
 
         yAxis: {
@@ -230,7 +232,9 @@ export default {
           {
             data: [],
             type: "line",
-            color: "#ff8181",
+            lineStyle: {
+                color: '#ff8181'
+            },
             symbol: false,
             markLine: {
               data: [
@@ -287,7 +291,9 @@ export default {
             data: [],
             symbol: false,
             type: "line",
-            color: "#5AA9F3",
+            lineStyle: {
+                color: '#5AA9F3'
+            },
             markLine: {
               data: [
                 {
@@ -337,13 +343,18 @@ export default {
       count_data_analysis: 0,
       ajustBreathAnimate: 1,
       stateText: "",
-      dateText: "",
+      nowDateText: moment(this.date).format("YYYY-MM-DD"),
     };
+  },
+  computed:{
+    dateText() {
+      return moment(this.date).format("YYYY-MM-DD")
+    }
   },
   mounted() {
     this.chart_HR = echarts.init(this.$refs.chartHR);
     this.chart_BR = echarts.init(this.$refs.chartBR);
-    this.dateText = moment(new Date()).format("YYYY-MM-DD");
+    
 
     this.ioSocket = window.io.connect(this.URL_SERVER_SOCKET);
 
@@ -609,6 +620,8 @@ export default {
       this.show = true;
       this.devID = item.devID; 
       
+      this.chart_HR.resize()
+      this.chart_BR.resize()
       this.clickIndex = index;
       this.$emit("refresh", {
         item,
@@ -623,168 +636,51 @@ export default {
       }
     },
     switch2SensingState() {
-      // $('#tip-img').attr('src', 'images/wait.png');
-      // $('#tip-img').css({
-      //     '-webkit-animation': 'rotate 3s infinite linear',
-      //     'animation': 'rotate 3s infinite linear'
-      // });
-      console.log("检测中，请保持静止");
       this.stateText = "检测中，请保持静止";
-      // $('#tip-text').text('检测中，请保持静止');
-      // $('#icon-HR').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
-      // $('#icon-BR').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
     },
     switch2StillState() {
-      // $('#tip-img').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
-      // $('#tip-img').attr('src', 'images/inbed.png');
-      // $('#tip-text').text('安静');
       this.stateText = "安静";
       if (this.HR == 0) {
         this.HR = "- -";
-        /* $('#HR').css('color', '#E5E5E5');
-                    // $('#HR').text('- -');
-                    $('#icon-HR').attr('src', 'images/heart-gray.png');
-                    $('#icon-HR').css({
-                        '-webkit-animation': '',
-                        'animation': '',
-                        'width': '1.8em'
-                    }); */
-      } else {
-        // $('#HR').css('color', '#000');
-        // this.HR = HR;
-        // $('#HR').text(HR);
-        // $('#HR').css('opacity', '1');
-        // $('#icon-HR').attr('src', 'images/heart.png');
-        // $('#icon-HR').css({
-        //     '-webkit-animation': 'twinkling-heart ' + Math.round(60 / (HR || 60) * 1000) + 'ms infinite ease-in-out',
-        //     'animation': 'twinkling-heart ' + Math.round(60 / (HR || 60) * 1000) + 'ms infinite ease-in-out'
-        // });
-      }
+      } 
 
       if (this.BR == 0) {
         this.BR = "- -";
-        /* $('#BR').css('color', '#E5E5E5');
-                    // $('#BR').text('- -');
-                    $('#icon-BR').attr('src', 'images/lungs-gray.png');
-                    $('#icon-BR').css({
-                        '-webkit-animation': '',
-                        'animation': '',
-                        'width': '1.8em'
-                    }); */
       } else {
-        // $('#BR').css('color', '#000');
-        // $('#BR').text(BR);
-        // $('#BR').css('opacity', '1');
-        // $('#icon-BR').attr('src', 'images/lungs.png');
-        // if (ajustBreathAnimate == 1) {
-        //     $('#icon-BR').css({
-        //         '-webkit-animation': 'twinkling-breath ' + Math.round(60 / (BR || 15) * 1000) + 'ms infinite ease-in-out',
-        //         'animation': 'twinkling-breath ' + Math.round(60 / (BR || 15) * 1000) + 'ms infinite ease-in-out'
-        //     });
-        // }
         if (this.ajustBreathAnimate++ == 3) {
           this.ajustBreathAnimate = 1;
         }
       }
 
       if (this.HR != 0 && this.BR != 0) {
+        
         this.drawChartData();
       }
     },
     switch2MovementState() {
       console.log("体动");
       this.stateText = "体动";
-      // $('#tip-img').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
-      // $('#tip-img').attr('src', 'images/movement.png');
-      // $('#tip-text').text('体动');
-      // $('#icon-HR').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
-      // $('#icon-BR').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
     },
     switch2OutbedState() {
       console.log("离床");
       this.stateText = "离床";
-      // $('#tip-img').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
-      // $('#tip-img').attr('src', 'images/outbed-rt.png');
-      // $('#tip-text').text('离床');
-      // $('#HR').css('opacity', '0');
-      // $('#BR').css('opacity', '0');
-      // $('#icon-HR').css({
-      //     '-webkit-animation': '',
-      //     'animation': '',
-      //     'width': '1.8em'
-      // });
-      // $('#icon-BR').css({
-      //     '-webkit-animation': '',
-      //     'animation': '',
-      //     'width': '1.8em'
-      // });
-      // $('#icon-HR').attr('src', 'images/heart-gray.png');
-      // $('#icon-BR').attr('src', 'images/lungs-gray.png');
     },
     switch2OfflineState() {
       console.log("离床");
       this.stateText = "离床";
-      // $('#tip-img').css({
-      //     '-webkit-animation': '',
-      //     'animation': ''
-      // });
-      // $('#tip-img').attr('src', 'images/warning.png');
-      // $('#tip-text').text('设备离线');
-      // $('#HR').css('color', '#E5E5E5');
-      // $('#BR').css('color', '#E5E5E5');
-      // $('#icon-HR').css({
-      //     '-webkit-animation': '',
-      //     'animation': '',
-      //     'width': '1.8em'
-      // });
-      // $('#icon-BR').css({
-      //     '-webkit-animation': '',
-      //     'animation': '',
-      //     'width': '1.8em'
-      // });
-      // $('#icon-HR').attr('src', 'images/heart-gray.png');
-      // $('#icon-BR').attr('src', 'images/lungs-gray.png');
     },
 
     drawChartData() {
+      console.log('drawChartData ++++++++',this.data_HR)
       //在图表上绘制数据点
       this.data_HR.push(this.HR);
-      this.chart_HR.setOption({
-        series: [
-          {
-            data: this.data_HR,
-          },
-        ],
-      });
+      this.option_chart_HR.series[0].data = this.data_HR
+      this.chart_HR.setOption( this.option_chart_HR);
+
       this.data_BR.push(this.BR);
-      this.chart_BR.setOption({
-        series: [
-          {
-            data: this.data_BR,
-          },
-        ],
-      });
+      this.option_chart_BR.series[0].data = this.data_BR
+      this.chart_BR.setOption( this.option_chart_BR);
+
       this.count_data_chart++;
       //清空图表数据从头绘制，每20个点
       if (this.count_data_chart % 20 == 0) {
@@ -799,8 +695,6 @@ export default {
         this.count_data_analysis++;
         this.PBR = this.count_data_analysis;
         this.PHR = this.count_data_analysis;
-        // this.$emit.progressHR.value = this.count_data_analysis;
-        // this.$emit.progressBR.value = this.count_data_analysis;
       }
       //心率呼吸分析数据采集完毕
       if (this.count_data_analysis == 20) {
@@ -896,6 +790,8 @@ tr {
   font-weight: 400;
   color: #ffffff;
   line-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .sleepTime {
   font-size: 16px;
@@ -1031,7 +927,7 @@ tr {
       background: #0f2089;
       padding: 23px 15px;
       .chart-vital {
-        width: 100%;
+        width: 380px;
         height: 155px;
       }
     }
