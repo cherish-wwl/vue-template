@@ -40,17 +40,6 @@ export default Vue.extend({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 60px;
 }
-html {
-  font-size: 62.5%;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-@media only screen and (min-width: 320px){html {font-size: 40.5%!important;}}
-@media only screen and (min-width: 360px){html {font-size: 50.5%!important;}}
-@media only screen and (min-width: 400px){html {font-size: 50.5%!important;}}
-@media only screen and (min-width: 480px){html {font-size: 50%!important;}}
 </style>

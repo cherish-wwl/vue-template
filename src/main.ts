@@ -4,7 +4,6 @@ import http from './utils/http'
 import router from './route'
 
 Vue.config.productionTip = false
-import './components/alert'
 
 Vue.prototype.$http = http
 

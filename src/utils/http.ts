@@ -11,19 +11,11 @@ instance.interceptors.request.use((config) => {
 },err => Promise.reject(err))
 
 instance.interceptors.response.use((response) => {
-<<<<<<< HEAD:src/utils/http.ts
   // const { code } = response
   // if(code !== 0) {
   //   //$alert(msg)
   //   return Promise.reject(response.data)
   // }
-=======
-  const { code } = response.data
-  console.log(response)
-  if(code !== 1) {
-    return Promise.reject(response.data)
-  }
->>>>>>> feature-zhanhui-dai:src/utils/http.js
   return response.data
 },err => Promise.reject(err))
 
