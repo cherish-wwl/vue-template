@@ -34,27 +34,16 @@ router.keys().forEach(key => {
     });
   }
 });
-<<<<<<< HEAD
 routes = routes.map(e => {
   return {
     ...e,
     path: e.path == '/home' ?  '/' : e.path,
    
-=======
-console.log("routes", routes);
-routes = routes.concat([
-  {
-    path: "/",
-    // redirect: "/home"
-    component: () => import("@/views/home"), // 相当于import
-    name:'home',
->>>>>>> feature-zhanhui-dai
   }
 })
 
 console.log('routes',routes)
 export default new VueRouter({
-  // mode: "history",
-  // base: '/new/',
+  mode: "history",
   routes: routes
 });
