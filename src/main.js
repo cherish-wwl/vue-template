@@ -6,6 +6,7 @@ import router from './route'
 import './common.scss'
 
 Vue.config.productionTip = false
+import './components/alert'
 
 Vue.prototype.$http = http
 function getRem (pwidth, prem) {
