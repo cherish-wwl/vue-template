@@ -38,11 +38,14 @@ router.keys().forEach(key => {
 routes = routes.concat([
   {
     path: "/",
-    redirect: "/home"
+    // redirect: "/home"
+    component: () => import("@/views/home"), // 相当于import
+    name:'home',
   }
 ]);
 
 export default new VueRouter({
-  mode: "history",
+  // mode: "history",
+  // base: '/new/',
   routes: routes
 });
