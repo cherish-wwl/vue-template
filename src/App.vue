@@ -7,8 +7,6 @@
 </template>
 
 <script>
-
-  console.log('process',process)
 import _ from "lodash";
 const layout = require.context("./layouts", false, /.vue/);
 const layouts = {};
@@ -36,14 +34,11 @@ export default {
 
 <style>
 #app {
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
-  min-width: 1920px;
-  /* min-height: 100vh;
-  line-height: 1; */
-  background: linear-gradient(0deg, #0A0C63, #02042A);
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>

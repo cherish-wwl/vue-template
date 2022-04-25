@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="container">
     HOME PAGE; 
     <br />
     count: {{ count }};
      <br />
-    <button @click="change">change</button>
+    <button class="btn" @click="change">change</button>
     <Test />
   </div>
 </template>
@@ -30,3 +30,10 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.container{
+.btn{
+  background-color: aquamarine;
+}
+}
+</style>

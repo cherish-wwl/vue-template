@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "npm run serve",
-    "dev:h5": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -12,11 +11,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.8.1",
-    "echarts": "^5.1.2",
     "lodash": "^4.17.20",
-    "moment": "^2.29.1",
     "vue": "^2.6.11",
-    "vue-cryptojs": "^2.1.5",
     "vue-router": "^3.4.9"
   },
   "devDependencies": {
@@ -27,8 +23,6 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^5.0.0",
-    "postcss": "^8.3.6",
-    "postcss-pxtorem": "^5.1.1",
     "sass-loader": "^10.1.0",
     "vue-template-compiler": "^2.6.11"
   },

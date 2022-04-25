@@ -34,15 +34,14 @@ router.keys().forEach(key => {
     });
   }
 });
-routes = routes.map(e => {
-  return {
-    ...e,
-    path: e.path == '/home' ?  '/' : e.path,
-   
+console.log("routes", routes);
+routes = routes.concat([
+  {
+    path: "/",
+    redirect: "/home"
   }
-})
+]);
 
-console.log('routes',routes)
 export default new VueRouter({
   mode: "history",
   routes: routes
