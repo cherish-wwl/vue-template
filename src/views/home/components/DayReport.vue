@@ -377,7 +377,7 @@ export default {
   filters:{
     formatTime(value) {
       if(!value) return '--'
-      return moment(value).format('hh:mm')
+      return moment(value * 1000).format('hh:mm')
     },
   },
   watch:{

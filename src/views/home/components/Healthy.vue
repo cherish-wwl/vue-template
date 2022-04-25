@@ -75,11 +75,12 @@ export default {
   background-image: url("~@/assets/radar.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 450px;
+  // height: 450px;
+  height: calc(50vh - 100px);
   margin-top: 20px;
   padding: 20px 14px;
   .line {
-    padding: 13px 30px 13px 35px;
+    padding: 7px 30px 7px 35px;
     background: #0f2089;
     margin-bottom: 2px;
   }

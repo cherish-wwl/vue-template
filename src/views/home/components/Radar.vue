@@ -100,12 +100,13 @@ export default {
 			if(!val.arrayScore.length) return
 			let option =  {...this.option}
 			option.series = [...this.option.series]
-			option.series[0].data.value = val.arrayScore
+			option.series[0].data[0].value = val.arrayScore
 			
 			option.radar.indicator = option.radar.indicator.map( (e,i)=> {
 				e.max = val.arrayScoreAssigned[i] + 1
 				return e
 			})
+			// console.log(option.series)
 			this.$nextTick(() => {
 				this.myChart = echarts.init(this.$refs.radar);
 				this.myChart.setOption(this.option);
@@ -115,7 +116,7 @@ export default {
 	methods: {
 		remFontSize() {
 			let oWidth = document.body.clientWidth || document.documentElement.clientWidth
-			let base = 12
+			let base = 14
 			if(oWidth <= 1280){
 				var fontSize = document.documentElement.style.fontSize;
 				return  Math.floor(base * fontSize * 0.5)
@@ -140,6 +141,12 @@ export default {
 	background-image: url("~@/assets/radar.png");
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	height: 380px;
+	// height: 380px;
+	height: calc(50vh - 100px);;
+}
+@media screen and (max-width: 1290px){
+	.card {
+		height: calc(50vh - 150px);
+	}
 }
 </style>

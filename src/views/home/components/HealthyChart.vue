@@ -41,7 +41,7 @@ export default {
   filters:{
     formatTime(value) {
       if(!value) return '--'
-      return moment(value).format('hh:mm')
+      return moment(value * 1000).format('hh:mm')
     },
   },
   data() {
@@ -200,7 +200,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .hchart {
-  height: 300px;
+  height: calc(50vh - 200px);
   width: 100%;
 }
 .summary {

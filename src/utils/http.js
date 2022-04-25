@@ -13,7 +13,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use((response) => {
   console.log('response',response)
   const { code } = response.data
-  if(code !== 0) {
+  if(![0,'200',200,'0'].includes(code)) {
     //$alert(msg)
     return Promise.reject(response.data)
   }

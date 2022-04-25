@@ -101,12 +101,12 @@ export default {
     },
     formatTime(value) {
       if (!value) return "--";
-      return moment(value).format("hh:mm");
+      return moment(value * 1000).format("hh:mm");
     },
     formatPer(time, data) {
       if (!time) return "--";
-      let outbedDate = moment(data.outbedTime).format("YYYY-MM-DD HH:mm:ss");
-      let inbedDate = moment(data.inbedTime).format("YYYY-MM-DD HH:mm:ss");
+      let outbedDate = moment(data.outbedTime * 1000).format("YYYY-MM-DD HH:mm:ss");
+      let inbedDate = moment(data.inbedTime * 1000).format("YYYY-MM-DD HH:mm:ss");
       console.log('+++++++++++++++',outbedDate,inbedDate)
       let t = new Date(outbedDate).getTime() - new Date(inbedDate).getTime();
       console.log(new Date(data.outbedTime));
@@ -126,6 +126,7 @@ export default {
       let res = "";
       if (h !== "00") res += `${h}小时`;
       if (m !== "00") res += `${m}分钟`;
+      // if (s !== "00") res += `${s}秒`;
       return res;
     },
   },
@@ -169,11 +170,11 @@ export default {
   background-image: url("~@/assets/radar.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 450px;
+  height: calc(50vh - 100px);
   margin-top: 20px;
   padding: 20px 14px;
   .line {
-    padding: 13px 35px;
+    padding: 7px 35px;
     background: #0f2089;
     margin-bottom: 2px;
   }

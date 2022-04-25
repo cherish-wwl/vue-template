@@ -35,7 +35,8 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 15px 10px ;
-  min-height: 850px;
+  min-height: calc(100vh - 180px);
+  overflow-y: auto;
 } 
 
 </style>

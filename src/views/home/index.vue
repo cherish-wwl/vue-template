@@ -68,7 +68,7 @@ export default {
       this.getReportData(item,day)
     },
     getReportData(item, day) {
-      console.log(item)
+      // console.log('getReportData',item)
       const { devID } = item
       this.$http({
         method: 'GET',
@@ -79,10 +79,10 @@ export default {
           outbedTime: ''
         }
       }).then(res => {
-        console.log('res',res)
+        console.log('res++++++++++',res)
         this.reportData = res.data
         this.reportData.timeAxis  =  this.reportData.timeAxis.map(e => {
-          return moment(e).format('HH:mm')
+          return moment(e * 1000).format('HH:mm')
         })
       }).catch(() => {
         this.reportData = {
@@ -154,7 +154,7 @@ export default {
 .header {
   z-index: 2;
   width: 1280px;
-  height: 99px;
+  height: 85px;
   margin: 0 auto;
   background: linear-gradient(0deg, #142786, #0630A6);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.4);
@@ -163,10 +163,10 @@ export default {
   position: relative;
   .inner {
     text-align: center;
-    padding-top: 28px;
+    padding-top: 23px;
   }
   .title {
-    font-size: 48px;
+    font-size: 40px;
     font-family: Source Han Sans CN;
     font-weight: bold;
     color: #FFFFFF;
@@ -176,7 +176,7 @@ export default {
 
 .main-content{
   display: flex;
-  padding: 25px 40px 53px;
+  padding: 25px 40px 20px;
   .part1 {
     width: 450px;
     flex-shrink: 0;

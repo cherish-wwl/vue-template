@@ -12,29 +12,33 @@
           </tr>
         </thead>
       </table>
-      <table class="main-table" cellspacing="0" cellpadding="0">
-        <tbody>
-          <tr
-            v-for="(item, index) in tableList"
-            :key="index"
-            :class="{ active: index === clickIndex }"
-            @click="handlerClick(item, index)"
-          >
-            <td class="name" width="25%">{{ item.name }}</td>
-            <td class="sleepTime">{{ dateText }}</td>
-            <!-- <td :class="'status status_' + item.status">
-              <span v-if="item.status === 1"> 体动</span>
-              <span v-if="item.status === 2"> 安静</span>
-              <span v-if="item.status === 3"> 离床</span>
-            </td> -->
-            <td class="isLive">
-              <button class="btn" @click.stop="showDetail(item, index)">
-                {{ item.isLive ? "立即查看" : "暂无监测" }}
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="height:74vh; overflow-y:auto;overflow-x:hidden; margin: 0 -10rem;
+    padding: 0 10rem;">
+        <table class="main-table" cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr
+              v-for="(item, index) in tableList"
+              :key="index"
+              :class="{ active: index === clickIndex }"
+              @click="handlerClick(item, index)"
+            >
+              <td class="name" width="25%">{{ item.name }}</td>
+              <td class="sleepTime">{{ dateText }}</td>
+              <!-- <td :class="'status status_' + item.status">
+                <span v-if="item.status === 1"> 体动</span>
+                <span v-if="item.status === 2"> 安静</span>
+                <span v-if="item.status === 3"> 离床</span>
+              </td> -->
+              <td class="isLive">
+                <button class="btn" @click.stop="showDetail(item, index)">
+                  立即查看
+                  <!-- {{ item.isLive ? "立即查看" : "暂无监测" }} -->
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="detail" v-show="show">
       <div class="tit">{{ nowDateText }} 生命体征实时监控</div>
@@ -120,79 +124,7 @@ export default {
         体动: require("@/assets/tidong.png"),
       },
       clickIndex: 0,
-      tableList: [
-        {
-          name: "张三",
-          devID: "40F5200F855E",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "张三1",
-          devID: "40F5200E6E01",
-          status: 2,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "张三",
-          devID: "40F5200EF336",
-          status: 3,
-          sleepTime: "2020-03-21",
-          isLive: false,
-        },
-        {
-          name: "张三",
-          devID: "40F5200FD01F",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "40F5200FE309",
-          devID: "40F5200FE309",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-
-        {
-          name: "张三",
-          devID: "40F5200FD476",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "张三",
-          devID: "40F5200E3B8E",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "张三",
-          devID: "40F5200EFA7B",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "张三",
-          devID: "40F5200E879A",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-        {
-          name: "张三",
-          devID: "40F5200E2EDA",
-          status: 1,
-          sleepTime: "2020-03-21",
-          isLive: true,
-        },
-      ],
+      tableList: [],
       chart_HR: null,
       chart_BR: null,
       option_chart_HR: {
@@ -352,6 +284,7 @@ export default {
     }
   },
   mounted() {
+    this.getDevList()
     this.chart_HR = echarts.init(this.$refs.chartHR);
     this.chart_BR = echarts.init(this.$refs.chartBR);
     
@@ -447,9 +380,7 @@ export default {
         this.switch2OfflineState();
       }
     });
-    this.$nextTick(() => {
-      this.changeDate();
-    });
+
   },
   methods: {
     init() {
@@ -600,6 +531,20 @@ export default {
         dateText: "",
       };
     },
+    getDevList() {
+      this.$http({
+        method: 'post',
+        url: 'https://api.hftsq.com/data/selectDevice'
+      }).then(res => {
+        this.tableList = res.message.map(e => {
+          return {
+            devID: e.device || '',
+            ...e
+          }
+        })
+         this.changeDate();
+      })
+    },
     changeDate() {
       this.$emit("refresh", {
         item: this.tableList[this.clickIndex],
@@ -726,7 +671,8 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 15px 10px;
-  min-height: 850px;
+  // min-height: 850px;
+  min-height: calc(100vh - 180px);
 }
 table {
   table-layout: fixed;
@@ -859,9 +805,11 @@ tr {
   }
   .inner {
     width: 440px;
-    min-height: 850px;
+    // min-height: 850px;
+    height: calc(100vh - 180px);
     padding: 0 14px;
     background-image: url("~@/assets/bg5.png");
+  
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: relative;
@@ -928,7 +876,7 @@ tr {
       padding: 23px 15px;
       .chart-vital {
         width: 380px;
-        height: 155px;
+        height: calc(14.5vh);
       }
     }
     .fei_area .text_value {

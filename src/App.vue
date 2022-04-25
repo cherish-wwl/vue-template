@@ -44,5 +44,6 @@ export default {
   background: linear-gradient(0deg, #0A0C63, #02042A);
   position: relative;
   overflow: hidden;
+  height: 100vh;
 }
 </style>
