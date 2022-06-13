@@ -155,7 +155,7 @@ export default {
         series: [
           {
             top: this.title ?  this.transformFontSize(35) : "",
-            startAngle: 170,
+            // startAngle: 170,
             name: "",
             radius: this.radius || ["55%", "75%"],
             type: "pie",

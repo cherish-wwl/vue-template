@@ -3,6 +3,9 @@
     <TitleC size="small" :hideArrow="true">
       {{fetchData.education.start}}-{{fetchData.education.end}}学年 德育活动
     </TitleC>
+     <div style="margin-top: 10rem;">
+      <BorderLabel>德育活动数量</BorderLabel>
+    </div>
    <PopChart :popData="fetchData.education.list"/>
     <TitleC size="small" :hideArrow="true">
    实训方案
@@ -16,12 +19,14 @@ import TitleC from "@/UI/Title.vue";
 import PopChart from './PopChart.vue'
 
 import CircleNum from "@/UI/CircleNum.vue";
+import BorderLabel from "@/UI/BorderLabel.vue";
 export default {
   props:['fetchData'],
   components: {
     TitleC,
     PopChart,
-    CircleNum
+    CircleNum,
+    BorderLabel
   },
 };
 </script>

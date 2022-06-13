@@ -4,11 +4,27 @@
       校园大数据
       <span class="current_time">{{ current_time }}</span>
     </div>
+    <!-- <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          1
+        </div>
+        <div class="swiper-slide">
+          2
+        </div>
+        <div class="swiper-slide">
+          3
+        </div>
+      </div>
+    </div> -->
+
     <router-view></router-view>
   </div>
 </template>
 <script>
 import moment from "moment";
+import Swiper from "swiper/swiper-bundle.min.js";
+import "swiper/swiper-bundle.min.css";
 export default {
   name: "default",
   data() {
@@ -18,11 +34,14 @@ export default {
     };
   },
 
-  mounted() {
+  created() {
     window.addEventListener("load", this.resizeZoom);
     window.addEventListener("resize", this.resizeZoom);
     this.startTimer();
-    this.togglePage();
+    // this.togglePage();
+  },
+  mounted() {
+    this.myswiper();
   },
   destroyed() {
     window.removeEventListener("resize", this.resizeZoom);
@@ -31,21 +50,34 @@ export default {
     clearInterval(this.timer);
     this.timer = null;
   },
-  watch:{
+  watch: {
     $route() {
-      this.resizeZoom()
-      this.togglePage()
-      
-    }
+      // this.resizeZoom()
+      // this.togglePage()
+    },
   },
   methods: {
+    myswiper() {
+      // eslint-disable-next-line no-undef
+      new Swiper(".swiper", {
+        loop: true,
+        // autoplay: true
+        // autoplay: {
+        //   delay: 10000,
+        //   disableOnInteraction: false,
+        //   stopOnLastSlide: false,
+        //   pauseOnMouseEnter: true,
+        // },
+      });
+    },
+
     togglePage() {
-    const list = ['/home', '/party','/practice','/teacher']
-    console.log(this.$route.path,this.$router)
-    const currentIndex = list.findIndex(e => e === this.$route.path) || 0
-    setTimeout(() => {
-      this.$router.replace(list[(currentIndex + 1)%4 ])
-    },10000)
+      const list = ["/home", "/party", "/practice", "/teacher"];
+      console.log(this.$route.path, this.$router);
+      const currentIndex = list.findIndex((e) => e === this.$route.path) || 0;
+      setTimeout(() => {
+        this.$router.replace(list[(currentIndex + 1) % 4]);
+      }, 10000);
     },
     startTimer() {
       this.timer = setInterval(() => {
@@ -62,6 +94,16 @@ export default {
 </script>
 
 <style scoped>
+.swiper {
+  width: 100%;
+  height: 80vh;
+}
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  color: #000;
+}
 .dataview-container {
   color: #fff;
   min-height: 100vh;

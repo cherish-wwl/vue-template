@@ -1,7 +1,7 @@
 <!-- d3js 气泡图 -->
 <template>
   <div>
-    <div id="bubble" style="width: 100%;height:420rem"></div>
+    <div id="bubble" style="width: 100%;height:390rem"></div>
     <div class="education-list">
       <div
         class="education-item"
@@ -288,7 +288,7 @@ export default {
         d3
           .pack()
           .size([api.getWidth() - 2, api.getHeight() - 2])
-          .padding(5)(displayRoot);
+          .padding(15)(displayRoot);
         context.nodes = {};
 
         displayRoot.descendants().forEach(function(node) {
@@ -324,13 +324,14 @@ export default {
         const nodeCatalog = nodePath.split(".")[1];
         let isLeaf = !node.children || !node.children.length;
         let z2 = api.value("depth") * 2;
-
+        console.log('api.getWidth()',api.getWidth(),node.r )
+        const r =  node.r > (api.getWidth() /3) ? (api.getWidth() /3) : node.r < 20 ? 20 : node.r
         return {
           type: "circle",
           shape: {
             cx: node.x,
             cy: node.y,
-            r: !isLeaf ? (node.r > 2 ? node.r - 2 : node.r) : node.r,
+            r: isLeaf ? (r > 2 ? r - 2 : r) : r,
           },
           transition: ["shape"],
           z2: z2,
@@ -378,33 +379,45 @@ export default {
         };
       }
       this.option = {
-        title: {
-          show: true,
-          top: this.transformFontSize(15),
-          text: "德育活动数量",
-          left: "center",
-          padding: [this.transformFontSize(10), this.transformFontSize(20)],
-          borderRadius: 5,
-          borderColor: "#6AF9FF",
-          borderWidth: 1,
-          shadowColor: "#6AF9FF",
-          shadowBlur: this.transformFontSize(6),
+        // title: {
+        //   show: true,
+        //   top: this.transformFontSize(15),
+        //   text: "德育活动数量",
+        //   left: "center",
+        //   padding: [this.transformFontSize(10), this.transformFontSize(20)],
+        //   borderRadius: 5,
+        //   borderColor: "#6AF9FF",
+        //   borderWidth: 1,
+        //   shadowColor: "#6AF9FF",
+        //   shadowBlur: this.transformFontSize(6),
 
-          width: this.transformFontSize(200),
-          textStyle: {
-            color: "#fff",
+        //   width: this.transformFontSize(200),
+        //   textStyle: {
+        //     color: "#fff",
 
-            fontSize: this.transformFontSize(18),
-            lineHeight: this.transformFontSize(20),
-          },
-        },
+        //     fontSize: this.transformFontSize(18),
+        //     lineHeight: this.transformFontSize(20),
+        //   },
+        // },
+     
         legend: {
           bottom: 20,
         },
         dataset: {
           source: seriesData,
         },
-        tooltip: {},
+       tooltip: {
+        show: true,
+        formatter: ({data}) => {
+           let nodePath = data.id;
+        let nodeName = nodePath
+          .slice(nodePath.lastIndexOf(".") + 1)
+          .split(/(?=[A-Z][^A-Z])/g)
+          .join("\n");
+          console.log('data',data)
+          return `${nodeName}:${data.value}` 
+        }
+      },
         hoverLayerThreshold: Infinity,
 
         series: [

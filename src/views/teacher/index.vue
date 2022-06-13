@@ -136,7 +136,7 @@ export default {
             },
             {
               name: "安全教育",
-              value: 2,
+              value: 2000,
             },
             {
               name: "法制教育",
@@ -193,39 +193,13 @@ export default {
           ],
           type_bar: {
             //课程类别
-            axis: ["公共基础", "专业实训"],
-            series: [
-              {
-                name: "一年级",
-                data: [0, 1],
-              },
-              {
-                name: "二年级",
-                data: [0, 0],
-              },
-              {
-                name: "三年级",
-                data: [0, 0],
-              },
-            ],
+            axis: ["一年级", "二年级", "三年级"],
+            series: [{name: "必修课", data: [2, 3, 0]}, {name: "选修课", data: [0, 0, 0]}]
           },
           optional_bar: {
             //课程种类
-            axis: ["必修课", "选修课"],
-            series: [
-              {
-                name: "一年级",
-                data: [4, 0],
-              },
-              {
-                name: "二年级",
-                data: [9, 0],
-              },
-              {
-                name: "三年级",
-                data: [2, 0],
-              },
-            ],
+            axis: ["一年级", "二年级", "三年级"],
+            series:[{name: "必修课", data: [2, 3, 0]}, {name: "选修课", data: [0, 0, 0]}]
           },
         },
         consult: {

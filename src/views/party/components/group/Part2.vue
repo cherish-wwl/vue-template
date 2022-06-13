@@ -11,7 +11,7 @@
       <div class="flex">
         <img
           style="width: 50rem;"
-          src="../../../../assets/dataview/icon3.png"
+          src="/assets/img/dataview/icon3.png"
         />
         <span>学生会</span>
       </div>
@@ -21,7 +21,7 @@
       <div class="flex">
         <img
           style="width: 50rem;"
-          src="../../../../assets/dataview/icon4.png"
+          src="/assets/img/dataview/icon4.png"
         /><span> 社团</span>
       </div>
       <span>{{ fdata.college.count_2 }}个</span>

@@ -3,7 +3,7 @@
     <TitleC size="small">
       {{ fetchData.course.start }}-{{ fetchData.course.end }}学年第{{
         fetchData.course.term
-      }}学期 各年级课
+      }}学期 各年级课程
     </TitleC>
     <div style="margin-top: 10rem;">
       <BorderLabel>课程数量</BorderLabel>
@@ -20,14 +20,14 @@
      <div>
       <BorderLabel>课程种类</BorderLabel>
     </div>
-    <Bar class="barC"/>
+    <Bar class="barC"  :barData="fetchData.course.type_bar"/>
     <div>
       <img src="@/assets/dataview/diviver.png" width="100%" />
     </div>
-     <div>
+    <div >
       <BorderLabel>课程类别</BorderLabel>
     </div>
-    <Bar class="barC"/>
+    <Bar class="barC" :barData="fetchData.course.optional_bar"/>
   </div>
 </template>
 <script>

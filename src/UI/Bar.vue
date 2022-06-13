@@ -3,21 +3,30 @@
 </template>
 <script>
 export default {
+  props:['barData'],
   data() {
     return {
       option: {},
-      myChart: {},
+      myChart: null,
     };
   },
-  mounted() {
-    this.initOption()
-    this.barEcharts()
+  watch: {
+    barData(){
+      this.resizeEchart()
+    }
   },
   methods: {
     resizeEchart() {
       this.initOption()
-      this.myChart.setOption(this.option);
-      this.myChart.resize()
+      console.log('this.option ',this.option )
+      if(this.myChart){
+        this.myChart.setOption(this.option);
+        this.myChart.resize()
+      }else{
+        this.myChart = this.$echarts.init(this.$refs.barchart);
+        // 配置图表
+        this.myChart.setOption(this.option);
+      }
     },
     initOption() {
       this.option = {
@@ -33,7 +42,7 @@ export default {
             fontSize: this.transformFontSize(20),
             color: "#FFFFFF",
           },
-          data: ["必修课", "选修课"],
+          data: this.barData.series.map(e =>e.name),
           itemStyle: {
       borderColor: "#fff",
       borderWidth: 1
@@ -83,7 +92,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["一年级", "二年级", "三年级"],
+            data:  this.barData.axis,
             axisTick: {
               show: false,
             },
@@ -119,28 +128,12 @@ export default {
               fontSize: this.transformFontSize(20),
               fontWeight: "500"
             },
-        series: [
-          {
-            name: "必修课",
-            type: "bar",
-            data: [43, 34, 25],
-          },
-          {
-            name: "选修课",
-           
-            type: "bar",
-            data: [94, 14, 34],
-          },
-        ],
+        series: this.barData.series.map( e => {
+          e.type = "bar"
+          return e
+        })
       };
-    },
-    barEcharts() {
-      this.myChart = this.$echarts.init(this.$refs.barchart);
-      // 配置图表
-
-      this.myChart.setOption(this.option);
-    }
-    
+    }    
   },
 };
 </script>
