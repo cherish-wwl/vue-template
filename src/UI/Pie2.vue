@@ -39,7 +39,8 @@ export default {
             name: "Access From",
             type: "pie",
             radius: ["60%", "80%"],
-            
+             startAngle: 45,
+              minAngle: 10,
             label: {
               // alignTo: "edge",
                overflow: 'none',
@@ -93,6 +94,8 @@ export default {
           },
           {
             name: "",
+             startAngle: 45,
+              minAngle: 10,
             type: "pie",
             radius: ["50%", "55%"],
             labelLine: {

@@ -34,5 +34,6 @@ export default {
   background-size: 100% 100%;
   width:420rem;
   padding: 14rem 10rem 0;
+  height: 100%;
 }
 </style>

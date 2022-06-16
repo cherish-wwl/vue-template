@@ -1,17 +1,21 @@
 <template>
-  <div :class=" (size || 'small')+'titleb titleb'">
+  <div :class="(size || 'small') + 'titleb titleb'">
     <slot></slot>
-    <img v-if="!hideArrow" style="width:30rem;"  src="./../assets/dataview/right-awarr.png"/>
+    <img
+      v-if="!hideArrow"
+      style="width:30rem;"
+      src="./../assets/dataview/right-awarr.png"
+    />
   </div>
 </template>
 <script>
 export default {
-  props: ['size','hideArrow']
-}
+  props: ["size", "hideArrow"],
+};
 </script>
 <style scoped>
 .titleb {
-  background-image: url('./../assets/dataview/title-small.png');
+  background-image: url("./../assets/dataview/title-small.png");
   background-repeat: no-repeat;
   background-size: auto 100%;
   padding: 5rem 10rem;
@@ -31,9 +35,10 @@ export default {
 }
 .dataview-container .largetitleb{
   font-size: 30rem;
-font-family: PingFangSC-Semibold, PingFang SC;
-font-weight: 600;
-color: #6AF9FF;
-line-height: 30rem;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #6AF9FF;
+  line-height: 30rem;
+  padding: 15rem 10rem;
 }
 </style>

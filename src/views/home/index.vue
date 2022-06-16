@@ -212,7 +212,7 @@ export default {
 }
 .center {
   flex: 1;
-  padding: 0 16rem;
+  position: relative;
 }
 .current_time {
   font-size: 30rem;

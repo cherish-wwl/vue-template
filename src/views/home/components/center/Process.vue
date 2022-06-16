@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="process-content">
     <TitleC size="small" :hideArrow="true">
       {{data.pipeline.date}} 实时工作流程
     </TitleC>
@@ -39,6 +39,12 @@ export default {
 };
 </script>
 <style scoped>
+.process-content{
+  position: absolute;
+  left: 16rem;
+  right: 16rem;
+  bottom: 20rem;
+}
 .process {
   display: flex;
   justify-content: space-between;

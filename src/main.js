@@ -6,6 +6,7 @@ import mixin from './views/home/store/mixin'
 import './views/home/store/eventBus'
 import * as echarts from 'echarts'
 Vue.config.productionTip = false
+import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.prototype.$http = http
 

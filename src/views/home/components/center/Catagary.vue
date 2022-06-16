@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style=" padding: 0 16rem;">
     <TitleC size="large" :hideArrow="true">
       {{data.school.name}}
     </TitleC>
