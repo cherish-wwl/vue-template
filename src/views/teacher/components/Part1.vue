@@ -22,7 +22,7 @@
     <TitleC size="small" :hideArrow="true">
       教研组数量
     </TitleC>
-    <Pie2 :pieData="teachData" title="教研组数" :formatter="formatter" :label="{padding: [this.transformFontSize(20),0,0,0]}"/>
+    <Pie2 :pieData="teachData"  title="教研组数" :formatter="formatter" :label="{padding: [this.transformFontSize(20),0,0,0]}"/>
   </div>
 </template>
 <script>

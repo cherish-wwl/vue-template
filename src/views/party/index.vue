@@ -268,5 +268,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 10rem 40rem;
+      height: 910rem;
+    overflow: hidden;
 }
 </style>

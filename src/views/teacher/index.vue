@@ -119,11 +119,11 @@ export default {
             counts: 5, //数量
             users: 37, //人数
           },
-          {
-            name: "专业基础",
-            counts: 6,
-            users: 33,
-          },
+          // {
+          //   name: "专业基础",
+          //   counts: 6,
+          //   users: 33,
+          // },
         ],
         education: {
           //德育教育

@@ -95,6 +95,7 @@ export default {
   },
   mounted() {
     this.barEcharts();
+    this.$eventBus.$on("resize", this.resizeEchart);
   },
 };
 </script>

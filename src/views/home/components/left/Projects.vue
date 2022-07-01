@@ -164,6 +164,8 @@ export default {
     this.initOption()
    
     this.barEcharts();
+
+    this.$eventBus.$on("resize", this.resizeEchart);
   },
 };
 </script>

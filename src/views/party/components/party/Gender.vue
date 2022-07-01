@@ -74,9 +74,10 @@ export default {
 }
 .male-text:before,
 .female-text:before {
-  content: "|";
+  content: "";
   display: block;
   margin-bottom: 10rem;
+  height: 20rem;
 }
 /* .gender-process-text > div { */
 /* margin-top: 10rem; */

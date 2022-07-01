@@ -1,5 +1,5 @@
 <template>
-  <div class="dataview-container">
+  <div class="dataview-container" @mousemove="mousemove($event)">
     <div class="title">
       校园大数据
       <span class="current_time">{{ current_time }}</span>
@@ -30,22 +30,29 @@ export default {
   data() {
     return {
       timer: null,
+      swiperTimer: null,
+      mySwiperref: null,
+      endTime:Date.now(),
       current_time: moment(Date.now()).format("YYYY-MM-DD HH:mm"),
     };
   },
 
   created() {
-    window.addEventListener("load", this.resizeZoom);
-    window.addEventListener("resize", this.resizeZoom);
-    this.startTimer();
+    this.resizeZoom();
     // this.togglePage();
   },
   mounted() {
+    window.addEventListener("load", this.resizeDataview);
+    window.addEventListener("resize", this.resizeDataview);
+    
+    this.startTimer();
     this.myswiper();
+
+    // this.autoSlide()
   },
   destroyed() {
-    window.removeEventListener("resize", this.resizeZoom);
-    window.removeEventListener("load", this.resizeZoom);
+    window.removeEventListener("resize", this.resizeDataview);
+    window.removeEventListener("load", this.resizeDataview);
 
     clearInterval(this.timer);
     this.timer = null;
@@ -57,10 +64,22 @@ export default {
     },
   },
   methods: {
+    mousemove() {
+     this.endTime = Date.now()
+    },
+    autoSlide(){
+      if(Date.now()-this.endTime >= 10000){
+        const activeIndex = this.mySwiperref.activeIndex;
+        this.mySwiperref.slideTo((activeIndex + 1) % 3);
+        this.endTime = Date.now()
+      }
+    },
+
     myswiper() {
+      // const that = this
       // eslint-disable-next-line no-undef
-      new Swiper(".swiper", {
-        loop: true,
+      this.mySwiperref = new Swiper(".swiper", {
+        // loop: true,
         // autoplay: true
         // autoplay: {
         //   delay: 10000,
@@ -82,6 +101,7 @@ export default {
     startTimer() {
       this.timer = setInterval(() => {
         this.current_time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+        // this.autoSlide()
       }, 1000);
     },
     init() {
@@ -107,6 +127,8 @@ export default {
 .dataview-container {
   color: #fff;
   min-height: 100vh;
+   background-color: #000;
+  width: 1920rem;
   min-width: 100vw;
 }
 
@@ -138,8 +160,7 @@ export default {
 <style>
 html {
   font-size: 6.25%;
-  background-color: #000;
-  width: 1920rem;
+ 
   overflow-x: auto;
 }
 </style>

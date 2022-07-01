@@ -197,8 +197,8 @@ export default {
               length: this.transformFontSize(
                 (this.pieData || []).length >= 4 ? 20 : 8
               ),
-              length2: 0,
-              maxSurfaceAngle: 50,
+              length2: (this.pieData || []).length >= 4 ? this.transformFontSize(10) : 0,
+              maxSurfaceAngle: 80,
             },
             labelLayout: (params) => {
               const isLeft = params.labelRect.x < this.myChart.getWidth() / 2;
@@ -210,7 +210,7 @@ export default {
                 : params.labelRect.x + params.labelRect.width;
               return {
                 labelLinePoints: points,
-                moveOverlap: true,
+                // moveOverlap: true,
               };
             },
             data:
@@ -284,6 +284,7 @@ export default {
   },
   mounted() {
     this.barEcharts();
+    this.$eventBus.$on("resize", this.resizeEchart);
   },
 };
 </script>

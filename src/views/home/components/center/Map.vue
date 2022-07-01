@@ -1,20 +1,30 @@
 <template>
-  <div class="map-container" id="map">
+  <div
+    class="map-container"
+    id="map"
+    :style="{
+      backgroundImage: activeId
+        ? 'url(/img/map/building' + activeId + '.png)'
+        : '',
+    }"
+  >
     <div class="hots">
-      <div
-        v-for="(item, index) in hots"
-        :key="index"
-        class="hot-area"
-        @mouseenter="enterHot(item)"
-        @mouseleave="leaveHot"
-        :style="{
-          top: item.leftPoint[0] + 'rem',
-          left: item.leftPoint[1] + 'rem',
-          width: item.width + 'rem',
-          height: item.height + 'rem',
-          transform: 'rotate(' + item.rotate + 'deg)',
-        }"
-      ></div>
+      <div v-for="(item, index) in hots" :key="index">
+        <div
+          class="hot-area"
+          v-for="(box, bi) in item.boxs"
+          :key="bi"
+          @mouseenter="enterHot(item)"
+          @mouseleave="leaveHot"
+          :style="{
+            top: box[0] + 'rem',
+            left: box[1] + 'rem',
+            width: box[2] + 'rem',
+            height: box[3] + 'rem',
+            transform: 'rotate(' + box[4] + 'deg)',
+          }"
+        ></div>
+      </div>
     </div>
     <div class="tooltips">
       <template v-for="(item, index) in hots">
@@ -103,41 +113,21 @@ export default {
     };
   },
   mounted() {
-    // this.options = {
-    //   boundariesElement: document.getElementById("map"),
-    //   gpuAcceleration: false,
-    // };
+    this.options = {
+      boundariesElement: document.getElementById("map"),
+      gpuAcceleration: false,
+    };
     this.init();
   },
   methods: {
     init() {
       this.hots = [
         {
-          id: 1,
-          width: "120",
-          height: "80",
-          rotate: "22",
-          leftPoint: [142, 56],
-          name: "蓝月楼",
-          rooms: 9,
-          count: 100,
-          type: 1,
-          typeName: "宿舍楼",
-          tooltip: {
-            point: [148, 96],
-            line: [
-              [152, 40, 58, 2],
-              [152, 40, 2, 234],
-            ],
-            rect: [385, 12, 164, 84],
-          },
-        },
-        {
           id: 2,
-          width: "120",
-          height: "80",
-          rotate: "22",
-          leftPoint: [96, 117],
+          boxs: [
+            [137, 138, 99, 54, 30],
+            [181, 177, 60, 80, 0],
+          ],
           type: 1,
           name: "蓝月楼2",
           rooms: 9,
@@ -153,19 +143,38 @@ export default {
           },
         },
         {
-          id: 3,
-          width: 132,
-          height: 94,
-          rotate: "22",
-          leftPoint: [141, 262],
-          name: "蓝月楼3",
+          id: 1,
+          boxs: [
+            [160, 79, 77, 42, 28],
+            [182, 77, 100, 76, 0],
+            [234, 78, 77, 42, 28],
+            [250, 136, 35, 42, 339],
+          ],
+          name: "蓝月楼",
           rooms: 9,
           count: 100,
+          type: 1,
+          typeName: "宿舍楼",
+          tooltip: {
+            point: [148, 96],
+            line: [
+              [152, 40, 58, 2],
+              [152, 40, 2, 234],
+            ],
+            rect: [385, 12, 164, 84],
+          },
+        },
+
+        {
+          id: 3,
+          boxs: [[125, 251, 124, 163, 15]],
+          name: "B区教学楼",
+          rooms: 46,
+          count: 2760,
           type: 2,
           typeName: "会堂/食堂/会议室",
           tooltip: {
             show: true,
-
             point: [153, 318],
             line: [[155, 322, 2, 113]],
             rect: [268, 80, 164, 84],
@@ -173,53 +182,30 @@ export default {
           list: [
             {
               name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "学生宿舍",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
+              count: 28,
             },
             {
               name: "教师办公室",
-              count: 9,
+              count: 13,
+            },
+            {
+              name: "实训室",
+              count: 3,
             },
             {
               name: "微机室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
+              count: 1,
             },
             {
               name: "其他",
-              count: 9,
-            },
+              count:1,
+            }
           ],
         },
         {
           id: 4,
-          width: 161,
-          height: 94,
-          rotate: "27",
-          leftPoint: [247, 367],
-          name: "蓝月楼3",
+          boxs: [[232, 355, 144, 177, 26]],
+          name: "A区教学楼",
           rooms: 9,
           count: 100,
           type: 2,
@@ -234,55 +220,36 @@ export default {
           list: [
             {
               name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "学生宿舍",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
+              count: 32,
             },
             {
               name: "教师办公室",
               count: 9,
             },
             {
-              name: "微机室",
-              count: 9,
+              name: "仓库",
+              count: 1,
             },
             {
-              name: "教室",
-              count: 9,
+              name: "实训室",
+              count: 2,
+            },
+            {
+              name: "微机室",
+              count: 3,
             },
             {
               name: "其他",
-              count: 9,
-            },
+              count:2,
+            }
           ],
         },
         {
           id: 5,
-          width: 140,
-          height: 89,
-          rotate: "22",
-          leftPoint: [187, 462],
-          name: "蓝月楼4",
-          rooms: 9,
-          count: 100,
+          boxs: [[187, 462, 140, 89, 22]],
+          name: "综合楼",
+          rooms: 65,
+          count: 3900,
           type: 2,
           typeName: "会堂/食堂/会议室",
           tooltip: {
@@ -297,55 +264,37 @@ export default {
           list: [
             {
               name: "教室",
-              count: 9,
+              count: 2,
             },
             {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "学生宿舍",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
+              name: "会议室",
+              count: 2,
             },
             {
               name: "教师办公室",
-              count: 9,
+              count: 31,
             },
             {
-              name: "微机室",
-              count: 9,
+              name: "仓库",
+              count: 2,
             },
             {
-              name: "教室",
-              count: 9,
+              name: "实训室",
+              count: 16,
             },
             {
               name: "其他",
-              count: 9,
+              count: 12,
             },
+          
           ],
         },
         {
           id: 6,
-          width: 253,
-          height: 89,
-          rotate: "26",
-          leftPoint: [118, 447],
-          name: "蓝月楼5",
-          rooms: 9,
-          count: 100,
+          boxs: [[118, 447, 253, 89, 26]],
+          name: "实训楼",
+          rooms: 90,
+          count: 5400,
           type: 2,
           typeName: "会堂/食堂/会议室",
           tooltip: {
@@ -360,113 +309,93 @@ export default {
           list: [
             {
               name: "教室",
-              count: 9,
+              count: 3,
             },
+
             {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "学生宿舍",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
+              name: "智慧教室",
+              count: 1,
             },
             {
               name: "教师办公室",
-              count: 9,
+              count: 4,
+            },
+            {
+              name: "实训室",
+              count: 44,
             },
             {
               name: "微机室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
+              count: 3,
             },
             {
               name: "其他",
-              count: 9,
+              count: 35,
             },
           ],
         },
-        {
-          id: 7,
-          width: 186,
-          height: 112,
-          rotate: "26",
-          leftPoint: [208, 695],
-          name: "蓝月楼6",
-          rooms: 9,
-          count: 100,
-          type: 2,
-          typeName: "会堂/食堂/会议室",
-          tooltip: {
-            show: true,
-            point: [243, 803],
-            line: [
-              [190, 807, 2, 55]
-            ],
-            rect: [107, 717, 164, 84],
-          },
-          list: [
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "学生宿舍",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "教师办公室",
-              count: 9,
-            },
-            {
-              name: "微机室",
-              count: 9,
-            },
-            {
-              name: "教室",
-              count: 9,
-            },
-            {
-              name: "其他",
-              count: 9,
-            },
-          ],
-        },
+        // {
+        //   id: 7,
+        //   boxs: [[208, 695, 186, 112, 26]],
+        //   name: "蓝月楼6",
+        //   rooms: 9,
+        //   count: 100,
+        //   type: 2,
+        //   typeName: "会堂/食堂/会议室",
+        //   tooltip: {
+        //     show: true,
+        //     point: [243, 803],
+        //     line: [[190, 807, 2, 55]],
+        //     rect: [107, 717, 164, 84],
+        //   },
+        //   list: [
+        //     {
+        //       name: "教室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "教室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "教室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "教室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "学生宿舍",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "教室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "教师办公室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "微机室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "教室",
+        //       count: 9,
+        //     },
+        //     {
+        //       name: "其他",
+        //       count: 9,
+        //     },
+        //   ],
+        // },
       ];
     },
     enterHot(item) {
       console.log("item", item);
-      if(item.type === 2) return
+      // if(item.type === 2) return
       this.activeId = item.id;
     },
     leaveHot() {
@@ -477,16 +406,17 @@ export default {
 </script>
 <style scoped>
 .map-container {
-  height: 632rem;
-  width: 993rem;
-  background: url("../../../../assets/dataview/map/map.png") no-repeat;
+  height: 686rem;
+  width: 973rem;
+  background: url("/img/map/map.png") no-repeat;
   background-size: 100% 100%;
   position: relative;
   margin: 0 auto;
-  margin-top: 23rem;
+  /* margin-top: 23rem; */
 }
 .hot-area {
   position: absolute;
+  /* background-color: #faebd77d; */
 }
 /* .hot-area:hover {
   background-color: #faebd77d;

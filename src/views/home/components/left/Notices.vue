@@ -1,6 +1,12 @@
 <template>
   <div class="notices">
-    <TitleC size="small"> {{ data.notice.month || 0 }} 通知公告检查 </TitleC>
+    <!-- 显示跳转图标，新页面打开，target定义同a标签定义 -->
+    <TitleC size="small" link="/xxx/xxx" target="_blank"> {{ data.notice.month || 0 }} 通知公告检查 </TitleC>
+    <!-- 显示跳转图标，当前页面打开 -->
+    <!-- <TitleC size="small" link="/xxx/xxx" > {{ data.notice.month || 0 }} 通知公告检查 </TitleC> -->
+    <!-- 不显示跳转图标 -->
+    <!-- <TitleC size="small" > {{ data.notice.month || 0 }} 通知公告检查 </TitleC> -->
+
     <div class="nums">
       <div class="nums-item">
         <span class="num">{{ data.notice.type_1 || 0 }} 条</span>

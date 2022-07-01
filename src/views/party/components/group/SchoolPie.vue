@@ -10,6 +10,7 @@
   </div>
 </template>
 <script>
+// import _ from 'lodash'
 export default {
   props: ["pieData"],
   data() {
@@ -20,14 +21,29 @@ export default {
   },
   watch: {
     pieData() {
+      console.log("watch");
       this.resizeEchart();
     },
   },
+  mounted() {
+    this.resizeEchart()
+    this.$eventBus.$on("resize", this.resizeEchart);
+  },
   methods: {
     resizeEchart() {
-      this.initOption();
+       this.initOption();
+      if (!this.myChart) {
+        this.myChart = this.$echarts.init(this.$refs.barchart);
+      }
+
       this.myChart.setOption(this.option);
+
       this.myChart.resize();
+      this.myChart.dispatchAction({
+        type: "highlight",
+        seriesIndex: 0,
+        dataIndex: 0
+      });
     },
     initOption() {
       this.option = {
@@ -77,6 +93,7 @@ export default {
           {
             name: "",
             type: "pie",
+             minAngle: 40,
             startAngle: 70,
             radius: ["50%", "70%"],
             center: ["20%", "50%"],
@@ -100,7 +117,7 @@ export default {
             },
             labelLine: {
               length: this.transformFontSize(15),
-              length2: this.transformFontSize(110),
+              length2: this.transformFontSize(200),
               maxSurfaceAngle: this.transformFontSize(80),
             },
             labelLayout: (params) => {
@@ -115,13 +132,13 @@ export default {
               return {
                 x: 160.5800495731844,
                 y: 48.16212212999844,
-                width: 200,
+                width:300,
                 // verticalAlign: "middle",
                 // align: "left",
                 labelLinePoints: [
                   [106.19606341322788, 52.240554911394],
                   [113.58004957318438, 49.16212212999844],
-                  [241.7499714481844, 49.16212212999844],
+                  [this.transformFontSize(350), 49.16212212999844],
                 ],
               };
             },
@@ -144,20 +161,15 @@ export default {
       };
     },
     barEcharts() {
-      this.initOption();
+      this.initOption()
       this.myChart = this.$echarts.init(this.$refs.barchart);
-      // 配置图表
-
       this.myChart.setOption(this.option);
-      this.myChart.dispatchAction({
+       this.myChart.dispatchAction({
         type: "highlight",
         seriesIndex: 0,
         dataIndex: 0,
       });
     },
-  },
-  mounted() {
-    this.barEcharts();
   },
 };
 </script>

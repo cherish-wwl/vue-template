@@ -235,6 +235,8 @@ export default {
   mounted() {
     this.init();
     this.initEcharts();
+
+    this.$eventBus.$on("resize", this.resizeEchart);
   },
 
   methods: {

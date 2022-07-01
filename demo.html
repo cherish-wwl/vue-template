@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div id="text" style="position:absolute; top:0;left:0;height:100px; width:200px; border: 1px solid #000000; text-align: center; font-size: 30px; line-height: 100px;"></div>
+  <canvas id="myCanvas" height="100" width="200" style="position: absolute;z-index: 100;top:1px;left:1px"></canvas>
+  <script>
+    var text = document.getElementById("text");
+//定义抽奖内容
+var arr = ["一等奖","二等奖","参与奖","别墅一套","跑车一辆"];
+//定义随机索引来获取arr里的"奖项"
+var index = Math.floor(Math.random()*arr.length);
+//将"奖项"放入页面div里
+text.innerHTML = arr[index];
+//定义画布和画笔
+var oCva = document.getElementById("myCanvas");
+var ctx = oCva.getContext("2d");
+
+//定义初始x,y(删除起始坐标)
+var x = 0,y = 0;
+
+//绘制遮罩层
+ctx.beginPath();
+ctx.rect(0, 0, oCva.offsetWidth, oCva.offsetHeight);
+ctx.fillStyle = "#ccc";
+ctx.fill();
+
+//添加鼠标按下、移动事件
+oCva.onmousedown = function() {
+	oCva.onmousemove = function(e) {
+		//获取鼠标位置,重新定义x,y坐标
+		var e = e || event;
+		x = e.clientX;
+		y = e.clientY;
+		console.log(x, y)
+		ctx.clearRect(x, y, 10, 10)
+
+		//鼠标松开,清除移动事件
+		oCva.onmouseup = function() {
+			oCva.onmousemove = null;
+		}
+	}
+};
+  </script>
+</body>
+</html>

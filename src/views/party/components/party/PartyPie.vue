@@ -49,13 +49,15 @@ export default {
             name: "",
             radius: [0, "60%"],
             type: "pie",
+             startAngle: 45,
             label: {
               formatter: data => {
                 return `{name|${data.name}}\n{time|${data.value}人} {time|${data.percent}%}`;
               },
               // minMargin: 10,
               // edgeDistance: 10,
-              lineHeight: this.transformFontSize(30),
+              lineHeight: this.transformFontSize(24),
+              overflow:'auto',
               rich: {
                 name: {
                   color: "#fff",
@@ -68,15 +70,16 @@ export default {
                 }
               }
             },
-            // labelLine: {
-            //   length: this.transformFontSize(15),
-            //   length2: 0,
-            //   // maxSurfaceAngle: 80
-            // },
+            labelLine: {
+              length: this.transformFontSize(15),
+              length2: this.transformFontSize(10),
+              maxSurfaceAngle: 80
+            },
             labelLayout: params => {
               const isLeft = params.labelRect.x < this.myChart.getWidth() / 2;
               const points = params.labelLinePoints;
               // Update the end point.
+              if(!points) return params
               points[2][0] = isLeft
                 ? params.labelRect.x
                 : params.labelRect.x + params.labelRect.width;
@@ -90,8 +93,9 @@ export default {
             left: -10,
             right: -10,
             name: "",
-            radius: [0, "70%"],
+            radius: [0, "65%"],
             type: "pie",
+             startAngle: 45,
             label: {
               // alignTo: "edge",
 
@@ -112,15 +116,16 @@ export default {
                 }
               }
             },
-            // labelLine: {
-            //   length: this.transformFontSize(15),
-            //   length2: 0,
-            //   // maxSurfaceAngle: 80
-            // },
+            labelLine: {
+              length: this.transformFontSize(10),
+              length2: 0,
+              maxSurfaceAngle: 80
+            },
             labelLayout: params => {
               const isLeft = params.labelRect.x < this.myChart.getWidth() / 2;
               const points = params.labelLinePoints;
               // Update the end point.
+              if(!points ) return params
               points[2][0] = isLeft
                 ? params.labelRect.x
                 : params.labelRect.x + params.labelRect.width;
@@ -143,6 +148,8 @@ export default {
   },
   mounted() {
     this.barEcharts();
+
+    this.$eventBus.$on("resize", this.resizeEchart);
   },
 };
 </script>

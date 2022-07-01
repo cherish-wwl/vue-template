@@ -15,6 +15,10 @@ export default {
       this.resizeEchart()
     }
   },
+mounted() {
+    this.resizeEchart()
+    this.$eventBus.$on("resize", this.resizeEchart);
+  },
   methods: {
     resizeEchart() {
       this.initOption()

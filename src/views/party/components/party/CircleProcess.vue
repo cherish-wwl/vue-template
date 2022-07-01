@@ -1,7 +1,7 @@
 <template>
   <div class="circleProcess">
     <div class="circleProcessBar">
-      <div ref="barchart" style="width:200rem ;height: 190rem;"></div>
+      <div ref="barchart" style="width:200rem ;height: 180rem;"></div>
       <img class="tangyuan" src="../../../../assets/dataview/tangyuan.png" />
     </div>
     <div class="totalArea">

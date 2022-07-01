@@ -13,17 +13,17 @@
           src="@/assets/dataview/birthlight.png"
         />
       </div>
-      {{birthday.count}}人
+      {{list.length}}人
     </div>
     <div class="brith-content">
       <div
         class="brith-man"
-        v-for="(item, index) in (birthday.list || []).slice(0, 13)"
+        v-for="(item, index) in (list || []).slice(0, 13)"
         :key="index"
       >
         {{ item.name }}
       </div>
-      <div class="brith-man last-brith" v-if="birthday.count > 13">
+      <div class="brith-man last-brith" v-if="list.length > 13">
         ...
       </div>
     </div>
@@ -34,53 +34,53 @@ export default {
   props: ['birthday'],
   data() {
     return {
-      // list: [
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      //   {
-      //     name: "张七一",
-      //   },
-      // ],
+      list: [
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+        {
+          name: "张七一",
+        },
+      ],
     };
   },
 };
@@ -96,9 +96,9 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -165rem;
+  bottom: -137rem;
   text-align: left;
-  height: 170rem;
+  height: 150rem;
   padding: 10rem 38rem 0;
 }
 .brithContainer:after {
@@ -139,7 +139,7 @@ export default {
   font-weight: 500;
   color: #ffffff;
   line-height: 20rem;
-  margin-bottom: 10rem;
+  /* margin-bottom: 10rem; */
 }
 .last-brith {
   background: rgba(0, 0, 0, 0.3);

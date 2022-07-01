@@ -15,6 +15,7 @@ layout.keys().forEach(key => {
   name = _.camelCase(name[1]);
   layouts[name] = layout(key).default;
 });
+console.log('layouts',layouts)
 export default {
   name: "App",
   components: layouts,

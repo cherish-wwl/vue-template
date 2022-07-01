@@ -1,16 +1,18 @@
 <template>
   <div :class="(size || 'small') + 'titleb titleb'">
     <slot></slot>
+    <a v-if="link" :href="link" :target="target">
     <img
-      v-if="!hideArrow"
-      style="width:30rem;"
-      src="./../assets/dataview/right-awarr.png"
-    />
+        style="width:30rem;"
+        src="./../assets/dataview/right-awarr.png"
+      />
+    </a>
+   
   </div>
 </template>
 <script>
 export default {
-  props: ["size", "hideArrow"],
+  props: ["size", "link",'target'],
 };
 </script>
 <style scoped>
